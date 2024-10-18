@@ -5,9 +5,8 @@
  * @var \Cake\Collection\CollectionInterface|string[] $skills
  */
 ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
 <div class="row">
     <aside class="column">
@@ -39,11 +38,10 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#skills-ids').select2({
-            placeholder: "Select skills",
-            allowClear: true
-        });
+    const element = document.querySelector('#skills-ids');
+    const choices = new Choices(element, {
+        removeItems: true,
+        removeItemButton: true
     });
 </script>
 

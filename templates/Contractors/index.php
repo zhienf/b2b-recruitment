@@ -5,9 +5,8 @@
  * @var \Cake\Collection\CollectionInterface|string[] $skills
  */
 ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
 <div class="contractors index content">
     <?= $this->Html->link(__('New Contractor'), ['action' => 'add'], ['class' => 'button float-right']) ?>
@@ -26,6 +25,7 @@
                     ]); ?></div>
                 <div class="column"><?= $this->Form->control('email', [
                         'placeholder' => 'Email contains...',
+                        'type' => 'text',
                         'value' => $this->request->getQuery('email'),
                     ]); ?></div>
             </div>
@@ -33,6 +33,7 @@
             <div class="row">
                 <div class="column"><?= $this->Form->control('sort_by', [
                         'type' => 'select',
+                        'id' => "sort-by",
                         'options' => [
                             '' => '-- Not selected --',
                             'projects' => 'Number of Projects'
@@ -43,7 +44,7 @@
                         'options' => $skills,
                         'multiple' => true,
                         'id' => "skills-ids",
-                        'label' => "Filter by Skills"
+                        'label' => "Filter by Skills",
                     ]); ?>
                 </div>
             </div>
@@ -94,10 +95,12 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('#skills-ids').select2({
-            placeholder: "Select skills",
-            allowClear: true
-        });
+    const sortByElement = document.querySelector('#sort-by');
+    const sortByChoices = new Choices(sortByElement, {singleModeForMultiSelect: false});
+
+    const skillsElement = document.querySelector('#skills-ids');
+    const skillsChoices = new Choices(skillsElement, {
+        removeItems: true,
+        removeItemButton: true
     });
 </script>
