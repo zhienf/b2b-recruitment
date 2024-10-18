@@ -2,11 +2,55 @@
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Contractor> $contractors
+ * @var \Cake\Collection\CollectionInterface|string[] $skills
  */
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <div class="contractors index content">
     <?= $this->Html->link(__('New Contractor'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Contractors') ?></h3>
+    <div class="search filter">
+        <?= $this->Form->create(null, ['type' => 'get']) ?>
+        <fieldset>
+            <div class="row">
+                <div class="column"><?= $this->Form->control('first_name', [
+                        'placeholder' => 'First name contains...',
+                        'value' => $this->request->getQuery('first_name'),
+                    ]); ?></div>
+                <div class="column"><?= $this->Form->control('last_name', [
+                        'placeholder' => 'Last name contains...',
+                        'value' => $this->request->getQuery('last_name'),
+                    ]); ?></div>
+                <div class="column"><?= $this->Form->control('email', [
+                        'placeholder' => 'Email contains...',
+                        'value' => $this->request->getQuery('email'),
+                    ]); ?></div>
+            </div>
+
+            <div class="row">
+                <div class="column"><?= $this->Form->control('sort_by', [
+                        'type' => 'select',
+                        'options' => [
+                            '' => '-- Not selected --',
+                            'projects' => 'Number of Projects'
+                        ]
+                    ]); ?></div>
+                <div class="column"><?= $this->Form->control('skills._ids', [
+                        'type' => 'select',
+                        'options' => $skills,
+                        'multiple' => true,
+                        'id' => "skills-ids",
+                        'label' => "Filter by Skills"
+                    ]); ?>
+                </div>
+            </div>
+        </fieldset>
+        <?= $this->Form->button(__('Search')) ?>
+        <?= $this->Form->end() ?>
+    </div>
     <div class="table-responsive">
         <table>
             <thead>
@@ -48,3 +92,12 @@
         <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#skills-ids').select2({
+            placeholder: "Select skills",
+            allowClear: true
+        });
+    });
+</script>

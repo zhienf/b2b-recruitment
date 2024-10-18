@@ -27,7 +27,7 @@ class Skill extends Entity
      */
     protected array $_accessible = [
         'name' => true,
-        'contractors' => true,
-        'projects' => true,
+        'contractors' => false,
+        'projects' => false,
     ];
 }

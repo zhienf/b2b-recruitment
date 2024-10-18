@@ -25,8 +25,6 @@
                 <legend><?= __('Edit Skill') ?></legend>
                 <?php
                     echo $this->Form->control('name');
-                    echo $this->Form->control('contractors._ids', ['options' => $contractors]);
-                    echo $this->Form->control('projects._ids', ['options' => $projects]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

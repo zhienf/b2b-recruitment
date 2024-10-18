@@ -17,10 +17,45 @@ class ContractorsController extends AppController
      */
     public function index()
     {
-        $query = $this->Contractors->find();
-        $contractors = $this->paginate($query);
 
-        $this->set(compact('contractors'));
+        $skillsList = $this->Contractors->Skills->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'name'
+        ])->toArray();
+
+        // Get query parameters
+        $firstName = $this->request->getQuery('first_name');
+        $lastName = $this->request->getQuery('last_name');
+        $email = $this->request->getQuery('email');
+        $sortBy = $this->request->getQuery('sort_by');
+        $selectedSkills = $this->request->getQuery('skills._ids');
+
+        $query = $this->Contractors->find();
+
+        // attach search fields from get request to the query using query builder
+        if (!empty($firstName)) {
+            $query->where(['Contractors.first_name LIKE' => '%' . $firstName . '%']);
+        }
+        if (!empty($lastName)) {
+            $query->where(['Contractors.last_name LIKE' => '%' . $lastName . '%']);
+        }
+        if (!empty($email)) {
+            $query->where(['Contractors.email LIKE' => '%' . $email . '%']);
+        }
+        // checks if the value is null or empty ""
+        if ($sortBy === 'projects') {
+            $query->orderBy(['total_projects' => 'DESC']);
+        }
+        if (!empty($selectedSkills)) {
+            $query->matching('Skills', function ($q) use ($selectedSkills) {
+                return $q->where(['Skills.id IN' => $selectedSkills]);
+            });
+        }
+
+        $contractors = $this->paginate($query);
+        $skills = $this->Contractors->Skills->find('list', limit: 200)->all();
+
+        $this->set(compact('contractors', 'skillsList', 'skills'));
     }
 
     /**
