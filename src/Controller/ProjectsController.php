@@ -17,11 +17,45 @@ class ProjectsController extends AppController
      */
     public function index()
     {
+        // Get query parameters
+        $skillKeyword = $this->request->getQuery('skill_keyword');
+        $selectedSkills = $this->request->getQuery('skills._ids');
+        $selectedStatus = $this->request->getQuery('status');
+        $startDate = $this->request->getQuery('start_date');
+        $endDate = $this->request->getQuery('end_date');
+
         $query = $this->Projects->find()
             ->contain(['Contractors', 'Organisations']);
-        $projects = $this->paginate($query);
 
-        $this->set(compact('projects'));
+        // attach search fields from get request to the query using query builder
+        // search by skill name keyword
+        if (!empty($skillKeyword)) {
+            $query->matching('Skills', function ($q) use ($skillKeyword) {
+                return $q->where(['Skills.name LIKE' => '%' . $skillKeyword . '%']);
+            });
+        }
+        // filter by selected skills
+        if (!empty($selectedSkills)) {
+            $query->matching('Skills', function ($q) use ($selectedSkills) {
+                return $q->where(['Skills.id IN' => $selectedSkills]);
+            });
+        }
+        // filter by selected status
+        if ($selectedStatus !== null && $selectedStatus !== '') {
+            $query->where(['Projects.complete' => $selectedStatus]);
+        }
+        // filter by due date range
+        if (!empty($startDate) && !empty($endDate)) {
+            $query->where([
+                'Projects.due_date >=' => $startDate,
+                'Projects.due_date <=' => $endDate
+            ]);
+        }
+
+        $projects = $this->paginate($query);
+        $skills = $this->Projects->Skills->find('list', limit: 200)->all();
+
+        $this->set(compact('projects', 'skills'));
     }
 
     /**

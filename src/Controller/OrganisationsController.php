@@ -17,7 +17,22 @@ class OrganisationsController extends AppController
      */
     public function index()
     {
-        $query = $this->Organisations->find();
+        $business_name = $this->request->getQuery('business_name');
+        $sortBy = $this->request->getQuery('sort_by');
+
+        $query = $this->Organisations->find()
+            ->select(['Organisations.id', 'Organisations.business_name', 'Organisations.contact_first_name','Organisations.contact_last_name', 'Organisations.contact_email', 'Organisations.current_website']);
+
+        if (!empty($business_name)) {
+            $query->where(['Organisations.business_name LIKE' => '%' . $business_name . '%']);
+        }
+        if ($sortBy === 'projects') {
+            $query->leftJoinWith('Projects')
+                ->select(['total_projects' => $query->func()->count('Projects.id')])
+                ->groupBy(['Organisations.id'])
+                ->orderBy(['total_projects' => 'DESC']);
+        }
+
         $organisations = $this->paginate($query);
 
         $this->set(compact('organisations'));
@@ -32,7 +47,7 @@ class OrganisationsController extends AppController
      */
     public function view($id = null)
     {
-        $organisation = $this->Organisations->get($id, contain: ['Enquiries', 'Projects']);
+        $organisation = $this->Organisations->get($id, contain: ['Enquiries', 'Projects', 'Projects.Contractors']);
         $this->set(compact('organisation'));
     }
 

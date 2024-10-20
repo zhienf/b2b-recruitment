@@ -28,7 +28,13 @@
                 </tr>
                 <tr>
                     <th><?= __('Management Tool Link') ?></th>
-                    <td><?= h($project->management_tool_link) ?></td>
+                    <td><?= $project->management_tool_link
+                            ? $this->Html->link(
+                                h($project->management_tool_link),
+                                $project->management_tool_link,
+                                ['target' => '_blank', 'escape' => false]
+                            )
+                            : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Contractor') ?></th>
@@ -40,11 +46,11 @@
                 </tr>
                 <tr>
                     <th><?= __('Due Date') ?></th>
-                    <td><?= h($project->due_date) ?></td>
+                    <td><?= $this->Time->format($project->due_date, 'dd/MM/yyyy') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Last Checked') ?></th>
-                    <td><?= h($project->last_checked) ?></td>
+                    <td><?= $this->Time->format($project->last_checked, 'dd/MM/yyyy') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Complete') ?></th>

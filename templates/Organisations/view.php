@@ -36,11 +36,23 @@
                 </tr>
                 <tr>
                     <th><?= __('Contact Email') ?></th>
-                    <td><?= h($organisation->contact_email) ?></td>
+                    <td><?= $organisation->contact_email
+                            ? $this->Html->link(
+                                h($organisation->contact_email),
+                                'mailto:' . h($organisation->contact_email),
+                                ['escape' => false]
+                            )
+                            : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Current Website') ?></th>
-                    <td><?= h($organisation->current_website) ?></td>
+                    <td><?= $organisation->current_website
+                            ? $this->Html->link(
+                                h($organisation->current_website),
+                                $organisation->current_website,
+                                ['target' => '_blank', 'escape' => false]
+                            )
+                            : '' ?></td>
                 </tr>
             </table>
             <div class="text">
@@ -56,7 +68,6 @@
                     <table>
                         <tr>
                             <th><?= __('Id') ?></th>
-                            <th><?= __('Organisation Id') ?></th>
                             <th><?= __('Contractor Id') ?></th>
                             <th><?= __('First Name') ?></th>
                             <th><?= __('Last Name') ?></th>
@@ -68,11 +79,16 @@
                         <?php foreach ($organisation->enquiries as $enquiry) : ?>
                         <tr>
                             <td><?= h($enquiry->id) ?></td>
-                            <td><?= h($enquiry->organisation_id) ?></td>
                             <td><?= h($enquiry->contractor_id) ?></td>
                             <td><?= h($enquiry->first_name) ?></td>
                             <td><?= h($enquiry->last_name) ?></td>
-                            <td><?= h($enquiry->email) ?></td>
+                            <td><?= $enquiry->email
+                                    ? $this->Html->link(
+                                        h($enquiry->email),
+                                        'mailto:' . h($enquiry->email),
+                                        ['escape' => false]
+                                    )
+                                    : '' ?></td>
                             <td><?= h($enquiry->phone_number) ?></td>
                             <td><?= h($enquiry->message) ?></td>
                             <td class="actions">
@@ -99,8 +115,7 @@
                             <th><?= __('Due Date') ?></th>
                             <th><?= __('Last Checked') ?></th>
                             <th><?= __('Complete') ?></th>
-                            <th><?= __('Contractor Id') ?></th>
-                            <th><?= __('Organisation Id') ?></th>
+                            <th><?= __('Contractor Name') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($organisation->projects as $project) : ?>
@@ -108,12 +123,17 @@
                             <td><?= h($project->id) ?></td>
                             <td><?= h($project->name) ?></td>
                             <td><?= h($project->description) ?></td>
-                            <td><?= h($project->management_tool_link) ?></td>
-                            <td><?= h($project->due_date) ?></td>
-                            <td><?= h($project->last_checked) ?></td>
-                            <td><?= h($project->complete) ?></td>
-                            <td><?= h($project->contractor_id) ?></td>
-                            <td><?= h($project->organisation_id) ?></td>
+                            <td><?= $project->management_tool_link
+                                    ? $this->Html->link(
+                                        h($project->management_tool_link),
+                                        $project->management_tool_link,
+                                        ['target' => '_blank', 'escape' => false]
+                                    )
+                                    : '' ?></td>
+                            <td><?= $this->Time->format($project->due_date, 'dd/MM/yyyy') ?></td>
+                            <td><?= $this->Time->format($project->last_checked, 'dd/MM/yyyy') ?></td>
+                            <td><?= h($project->complete) ? 'Completed' : 'In Progress' ?></td>
+                            <td><?= $this->Html->link(h($project->contractor->first_name . ' ' . $project->contractor->last_name), ['controller' => 'Contractors', 'action' => 'view', $project->contractor_id]) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Projects', 'action' => 'view', $project->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Projects', 'action' => 'edit', $project->id]) ?>

@@ -17,12 +17,6 @@ class ContractorsController extends AppController
      */
     public function index()
     {
-
-        $skillsList = $this->Contractors->Skills->find('list', [
-            'keyField' => 'id',
-            'valueField' => 'name'
-        ])->toArray();
-
         // Get query parameters
         $firstName = $this->request->getQuery('first_name');
         $lastName = $this->request->getQuery('last_name');
@@ -30,7 +24,8 @@ class ContractorsController extends AppController
         $sortBy = $this->request->getQuery('sort_by');
         $selectedSkills = $this->request->getQuery('skills._ids');
 
-        $query = $this->Contractors->find();
+        $query = $this->Contractors->find()
+            ->select(['Contractors.id', 'Contractors.first_name', 'Contractors.last_name', 'Contractors.email', 'Contractors.phone_number']);
 
         // attach search fields from get request to the query using query builder
         if (!empty($firstName)) {
@@ -42,9 +37,11 @@ class ContractorsController extends AppController
         if (!empty($email)) {
             $query->where(['Contractors.email LIKE' => '%' . $email . '%']);
         }
-        // checks if the value is null or empty ""
         if ($sortBy === 'projects') {
-            $query->orderBy(['total_projects' => 'DESC']);
+            $query->leftJoinWith('Projects')
+            ->select(['total_projects' => $query->func()->count('Projects.id')])
+                ->groupBy(['Contractors.id'])
+                ->orderBy(['total_projects' => 'DESC']);
         }
         if (!empty($selectedSkills)) {
             $query->matching('Skills', function ($q) use ($selectedSkills) {
@@ -55,7 +52,7 @@ class ContractorsController extends AppController
         $contractors = $this->paginate($query);
         $skills = $this->Contractors->Skills->find('list', limit: 200)->all();
 
-        $this->set(compact('contractors', 'skillsList', 'skills'));
+        $this->set(compact('contractors','skills'));
     }
 
     /**
@@ -67,7 +64,7 @@ class ContractorsController extends AppController
      */
     public function view($id = null)
     {
-        $contractor = $this->Contractors->get($id, contain: ['Skills', 'Enquiries', 'Projects']);
+        $contractor = $this->Contractors->get($id, contain: ['Skills', 'Enquiries', 'Projects', 'Projects.Organisations']);
         $this->set(compact('contractor'));
     }
 

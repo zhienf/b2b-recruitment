@@ -16,7 +16,7 @@
     </aside>
     <div class="column column-80">
         <div class="contractors view content">
-            <h3><?= h($contractor->first_name) ?></h3>
+            <h3><?= h($contractor->first_name . ' ' . $contractor->last_name) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -36,7 +36,13 @@
                 </tr>
                 <tr>
                     <th><?= __('Email') ?></th>
-                    <td><?= h($contractor->email) ?></td>
+                    <td><?= $contractor->email
+                            ? $this->Html->link(
+                                h($contractor->email),
+                                'mailto:' . h($contractor->email),
+                                ['escape' => false]
+                            )
+                            : '' ?></td>
                 </tr>
             </table>
             <div class="related">
@@ -45,19 +51,11 @@
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <th><?= __('Id') ?></th>
                             <th><?= __('Name') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($contractor->skills as $skill) : ?>
                         <tr>
-                            <td><?= h($skill->id) ?></td>
                             <td><?= h($skill->name) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Skills', 'action' => 'view', $skill->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Skills', 'action' => 'edit', $skill->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Skills', 'action' => 'delete', $skill->id], ['confirm' => __('Are you sure you want to delete # {0}?', $skill->id)]) ?>
-                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </table>
@@ -114,8 +112,7 @@
                             <th><?= __('Due Date') ?></th>
                             <th><?= __('Last Checked') ?></th>
                             <th><?= __('Complete') ?></th>
-                            <th><?= __('Contractor Id') ?></th>
-                            <th><?= __('Organisation Id') ?></th>
+                            <th><?= __('Organisation Name') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($contractor->projects as $project) : ?>
@@ -123,12 +120,17 @@
                             <td><?= h($project->id) ?></td>
                             <td><?= h($project->name) ?></td>
                             <td><?= h($project->description) ?></td>
-                            <td><?= h($project->management_tool_link) ?></td>
-                            <td><?= h($project->due_date) ?></td>
-                            <td><?= h($project->last_checked) ?></td>
-                            <td><?= h($project->complete) ?></td>
-                            <td><?= h($project->contractor_id) ?></td>
-                            <td><?= h($project->organisation_id) ?></td>
+                            <td><?= $project->management_tool_link
+                                    ? $this->Html->link(
+                                        h($project->management_tool_link),
+                                        $project->management_tool_link,
+                                        ['target' => '_blank', 'escape' => false]
+                                    )
+                                    : '' ?></td>
+                            <td><?= $this->Time->format($project->due_date, 'dd/MM/yyyy') ?></td>
+                            <td><?= $this->Time->format($project->last_checked, 'dd/MM/yyyy') ?></td>
+                            <td><?= h($project->complete) ? 'Completed' : 'In Progress' ?></td>
+                            <td><?= $this->Html->link(h($project->organisation->business_name), ['controller' => 'Organisations', 'action' => 'view', $project->organisation_id]) ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Projects', 'action' => 'view', $project->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Projects', 'action' => 'edit', $project->id]) ?>

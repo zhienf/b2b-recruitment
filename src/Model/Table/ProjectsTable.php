@@ -100,11 +100,23 @@ class ProjectsTable extends Table
             ->notEmptyString('complete');
 
         $validator
-            ->uuid('contractor_id')
+            ->add('contractor_id', 'validId', [
+                'rule' => function ($value) {
+                    // allow either a UUID or an integer
+                    return is_numeric($value) || (is_string($value) && preg_match('/^[a-f0-9-]{36}$/i', $value));
+                },
+                'message' => 'Please provide a valid ID (either UUID or integer).'
+            ])
             ->allowEmptyString('contractor_id');
 
         $validator
-            ->uuid('organisation_id')
+            ->add('organisation_id', 'validId', [
+                'rule' => function ($value) {
+                    // allow either a UUID or an integer
+                    return is_numeric($value) || (is_string($value) && preg_match('/^[a-f0-9-]{36}$/i', $value));
+                },
+                'message' => 'Please provide a valid ID (either UUID or integer).'
+            ])
             ->notEmptyString('organisation_id');
 
         return $validator;

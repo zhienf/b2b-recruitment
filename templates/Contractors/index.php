@@ -71,7 +71,13 @@
                     <td><?= h($contractor->first_name) ?></td>
                     <td><?= h($contractor->last_name) ?></td>
                     <td><?= h($contractor->phone_number) ?></td>
-                    <td><?= h($contractor->email) ?></td>
+                    <td><?= $contractor->email
+                            ? $this->Html->link(
+                                h($contractor->email),
+                                'mailto:' . h($contractor->email),
+                                ['escape' => false]
+                            )
+                            : '' ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $contractor->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contractor->id]) ?>

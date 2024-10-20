@@ -7,6 +7,9 @@
  * @var string[]|\Cake\Collection\CollectionInterface $skills
  */
 ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
 <div class="row">
     <aside class="column">
         <div class="side-nav">
@@ -33,7 +36,10 @@
                     echo $this->Form->control('complete');
                     echo $this->Form->control('contractor_id', ['options' => $contractors, 'empty' => true]);
                     echo $this->Form->control('organisation_id', ['options' => $organisations]);
-                    echo $this->Form->control('skills._ids', ['options' => $skills]);
+                    echo $this->Form->control('skills._ids', [
+                        'options' => $skills,
+                        'multiple' => true
+                    ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
@@ -41,3 +47,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    const skillsElement = document.querySelector('#skills-ids');
+    const skillsChoices = new Choices(skillsElement, {
+        removeItems: true,
+        removeItemButton: true
+    });
+</script>
