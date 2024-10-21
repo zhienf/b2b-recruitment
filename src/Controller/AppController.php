@@ -46,6 +46,8 @@ class AppController extends Controller
         // check authentication result and lock site
         $this->loadComponent('Authentication.Authentication');
 
+        // load identity helper to be used in views
+        $this->viewBuilder()->setHelpers(['Authentication.Identity']);
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/5/en/controllers/components/form-protection.html

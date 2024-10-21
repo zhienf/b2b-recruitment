@@ -58,6 +58,25 @@ $description = 'B2B Project Recruit';
                 'controller' => 'Enquiries',
                 'action' => 'index'
             ], []) ?>
+            <?php if ($this->Identity->isLoggedIn()): ?>
+                <?= $this->Html->link('Logout',
+                    [
+                        'controller' => 'Users',
+                        'action' => 'logout'
+                    ],
+                    [
+                        'class' => 'button logout-button'
+                    ]) ?>
+            <?php else: ?>
+                <?= $this->Html->link('Login',
+                    [
+                        'controller' => 'Users',
+                        'action' => 'login'
+                    ],
+                    [
+                        'class' => 'button login-button'
+                    ]) ?>
+            <?php endif; ?>
         </div>
     </nav>
     <main class="main">

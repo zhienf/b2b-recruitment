@@ -1,10 +1,13 @@
 /* Milligram overrides */
 :root {
     /* The following are official CakePHP colors */
-    --color-cakephp-red: #004aad;
+    --color-cakephp-red: #0043ec;
     --color-cakephp-gray: #404041;
     --color-cakephp-blue: #2f85ae;
     --color-cakephp-lightblue: #34bdd7;
+
+    --color-palatinate-blue: #0043ec;
+    --color-carrot-orange: #f09841;
 
     /* These are additional colors */
     --color-lightgray: #606c76;
@@ -34,6 +37,12 @@
 
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: var(--color-cakephp-red);
+    border-color: var(--color-cakephp-red);
+}
+
+a.button.login-button, a.button.logout-button {
+    background-color: var(--color-cakephp-red);
+    color: var(--color-white);
     border-color: var(--color-cakephp-red);
 }
 
