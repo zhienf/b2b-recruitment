@@ -20,7 +20,7 @@
         <div class="organisations form content">
             <?= $this->Form->create($organisation) ?>
             <fieldset>
-                <legend><?= __('Edit Organisation') ?></legend>
+                <h3><?= __('Edit Organisation') ?></h3>
                 <?php
                     echo $this->Form->control('business_name');
                     echo $this->Form->control('contact_first_name');

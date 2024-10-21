@@ -22,7 +22,7 @@
         <div class="skills form content">
             <?= $this->Form->create($skill) ?>
             <fieldset>
-                <legend><?= __('Edit Skill') ?></legend>
+                <h3><?= __('Edit Skill') ?></h3>
                 <?php
                     echo $this->Form->control('name');
                 ?>

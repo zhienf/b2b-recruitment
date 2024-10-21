@@ -15,7 +15,7 @@
         <div class="organisations form content">
             <?= $this->Form->create($organisation) ?>
             <fieldset>
-                <legend><?= __('Add Organisation') ?></legend>
+                <h3><?= __('Add Organisation') ?></h3>
                 <?php
                     echo $this->Form->control('business_name');
                     echo $this->Form->control('contact_first_name');

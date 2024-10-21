@@ -102,4 +102,22 @@ class EnquiriesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function switchReplyStatus($id = null)
+    {
+        // Find the record
+        $enquiry = $this->Enquiries->get($id);
+
+        // Flip the general availability field value
+        $enquiry->replied = !$enquiry->replied;
+
+        // Save the changes
+        if ($this->Enquiries->save($enquiry)) {
+            $this->Flash->success($enquiry->replied ? __('Enquiry successfully marked as replied.') : __('Enquiry successfully marked as not replied.'));
+        } else {
+            $this->Flash->error(__('The enquiry reply status could not be updated. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'view', $enquiry->id]);
+    }
 }

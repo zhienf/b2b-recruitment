@@ -17,7 +17,7 @@
         <div class="skills form content">
             <?= $this->Form->create($skill) ?>
             <fieldset>
-                <legend><?= __('Add Skill') ?></legend>
+                <h3><?= __('Add Skill') ?></h3>
                 <?php
                     echo $this->Form->control('name');
                 ?>

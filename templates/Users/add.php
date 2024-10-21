@@ -15,7 +15,7 @@
         <div class="users form content">
             <?= $this->Form->create($user) ?>
             <fieldset>
-                <legend><?= __('Add User') ?></legend>
+                <h3><?= __('Add User') ?></h3>
                 <?php
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');

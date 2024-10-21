@@ -21,7 +21,7 @@
         <div class="projects form content">
             <?= $this->Form->create($project) ?>
             <fieldset>
-                <legend><?= __('Add Project') ?></legend>
+                <h3><?= __('Add Project') ?></h3>
                 <?php
                     echo $this->Form->control('name');
                     echo $this->Form->control('description');

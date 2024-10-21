@@ -17,7 +17,7 @@
         <div class="enquiries form content">
             <?= $this->Form->create($enquiry) ?>
             <fieldset>
-                <legend><?= __('Add Enquiry') ?></legend>
+                <h3><?= __('Add Enquiry') ?></h3>
                 <?php
                     echo $this->Form->control('organisation_id', ['options' => $organisations, 'empty' => true]);
                     echo $this->Form->control('contractor_id', ['options' => $contractors, 'empty' => true]);

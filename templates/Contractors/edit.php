@@ -24,7 +24,7 @@
         <div class="contractors form content">
             <?= $this->Form->create($contractor) ?>
             <fieldset>
-                <legend><?= __('Edit Contractor') ?></legend>
+                <h3><?= __('Edit Contractor') ?></h3>
                 <?php
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
