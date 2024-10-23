@@ -30,9 +30,11 @@ use Cake\View\Exception\MissingTemplateException;
  *
  * @link https://book.cakephp.org/5/en/controllers/pages-controller.html
  * @property \Cake\Controller\Component|\Cake\ORM\Table|mixed|null $Authentication
+ * @property \App\Model\Table\SkillsTable $Skills
  */
 class PagesController extends AppController
 {
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -40,7 +42,7 @@ class PagesController extends AppController
         // Make the current controller to use Freelancer layout
         $this->viewBuilder()->setLayout('selecao');
 
-        $this->Authentication->addUnauthenticatedActions(['display']);
+        $this->Authentication->addUnauthenticatedActions(['display', 'contractor']);
     }
     /**
      * Displays a view
@@ -82,20 +84,10 @@ class PagesController extends AppController
         }
     }
 
-    public function sendContact()
+    public function contractor()
     {
-        if ($this->request->is('post')) {
-            $data = $this->request->getData();
-
-            // Process form data (e.g., send an email, save to the database, etc.)
-            if ($this->sendContactEmail($data)) {
-                $this->Flash->success('Your message has been sent. Thank you!');
-            } else {
-                $this->Flash->error('There was an issue sending your message. Please try again.');
-            }
-
-            // Optionally redirect to a different page after submission
-            return $this->redirect(['action' => 'display', 'contact']);
-        }
+        $Skills = $this->fetchTable('Skills');
+        $skills = $Skills->find('list', limit: 200)->all();
+        $this->set(compact('skills'));
     }
 }

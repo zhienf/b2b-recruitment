@@ -66,8 +66,8 @@ $description = 'Jims Recruiting';
                 <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']) ?>#services">Services</a></li>
                 <li class="dropdown"><a href="#navmenu"><span>Registration</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'organisations']) ?>">For Organisations</a></li>
-                        <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'contractors']) ?>">For Contractors</a></li>
+                        <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'organisation']) ?>">For Organisations</a></li>
+                        <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'contractor']) ?>">For Contractors</a></li>
                     </ul>
                 </li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'contact']) ?>">Contact Us</a></li>
