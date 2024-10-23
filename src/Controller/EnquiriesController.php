@@ -3,13 +3,26 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * Enquiries Controller
  *
  * @property \App\Model\Table\EnquiriesTable $Enquiries
+ * @property \Cake\Controller\Component|\Cake\ORM\Table|mixed|null $Authentication
  */
 class EnquiriesController extends AppController
 {
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Make the current controller to use Freelancer layout
+        $this->viewBuilder()->setLayout('default');
+
+        $this->Authentication->addUnauthenticatedActions(['add']);
+    }
+
     /**
      * Index method
      *
@@ -48,15 +61,12 @@ class EnquiriesController extends AppController
         if ($this->request->is('post')) {
             $enquiry = $this->Enquiries->patchEntity($enquiry, $this->request->getData());
             if ($this->Enquiries->save($enquiry)) {
-                $this->Flash->success(__('The enquiry has been saved.'));
+                $this->Flash->success(__('Your message has been sent. Thank you!'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'contact']);
             }
-            $this->Flash->error(__('The enquiry could not be saved. Please, try again.'));
+            $this->Flash->error(__('The message could not be sent. Please, try again.'));
         }
-        $organisations = $this->Enquiries->Organisations->find('list', limit: 200)->all();
-        $contractors = $this->Enquiries->Contractors->find('list', limit: 200)->all();
-        $this->set(compact('enquiry', 'organisations', 'contractors'));
     }
 
     /**

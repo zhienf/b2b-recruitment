@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
@@ -28,9 +29,19 @@ use Cake\View\Exception\MissingTemplateException;
  * This controller will render views from templates/Pages/
  *
  * @link https://book.cakephp.org/5/en/controllers/pages-controller.html
+ * @property \Cake\Controller\Component|\Cake\ORM\Table|mixed|null $Authentication
  */
 class PagesController extends AppController
 {
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Make the current controller to use Freelancer layout
+        $this->viewBuilder()->setLayout('selecao');
+
+        $this->Authentication->addUnauthenticatedActions(['display']);
+    }
     /**
      * Displays a view
      *
@@ -68,6 +79,23 @@ class PagesController extends AppController
                 throw $exception;
             }
             throw new NotFoundException();
+        }
+    }
+
+    public function sendContact()
+    {
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+
+            // Process form data (e.g., send an email, save to the database, etc.)
+            if ($this->sendContactEmail($data)) {
+                $this->Flash->success('Your message has been sent. Thank you!');
+            } else {
+                $this->Flash->error('There was an issue sending your message. Please try again.');
+            }
+
+            // Optionally redirect to a different page after submission
+            return $this->redirect(['action' => 'display', 'contact']);
         }
     }
 }

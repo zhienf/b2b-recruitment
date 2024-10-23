@@ -36,7 +36,7 @@ $description = 'B2B Project Recruit';
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <?= $this->Html->image('/img/b2b-logo.png', [
+            <?= $this->Html->image('/img/jims-logo.png', [
                 'alt' => 'Logo',
                 'url' => '/'
             ]) ?>
@@ -57,6 +57,11 @@ $description = 'B2B Project Recruit';
             <?= $this->Html->link('Enquiries', [
                 'controller' => 'Enquiries',
                 'action' => 'index'
+            ], []) ?>
+            <?= $this->Html->link('Business Website', [
+                'controller' => 'Pages',
+                'action' => 'display',
+                'home'
             ], []) ?>
             <?php if ($this->Identity->isLoggedIn()): ?>
                 <?= $this->Html->link('Logout',

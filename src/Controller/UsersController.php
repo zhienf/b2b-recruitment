@@ -103,7 +103,7 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         // Configure the login action to not require authentication
-        $this->Authentication->addUnauthenticatedActions(['login']);
+        $this->Authentication->addUnauthenticatedActions(['login', ]);
     }
 
     public function login()
