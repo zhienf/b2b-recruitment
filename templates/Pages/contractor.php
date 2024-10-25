@@ -22,7 +22,7 @@
                     'id' => 'contractorForm',
                     'url' => [
                         'controller' => 'Contractors',
-                        'action' => 'add'
+                        'action' => 'register'
                     ],
                     'type' => 'POST'
                 ]); ?>

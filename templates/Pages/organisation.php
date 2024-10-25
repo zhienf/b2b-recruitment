@@ -18,7 +18,7 @@
                     'id' => 'contactForm',
                     'url' => [
                         'controller' => 'Organisations',
-                        'action' => 'add'
+                        'action' => 'register'
                     ],
                     'type' => 'POST'
                 ]); ?>
@@ -83,12 +83,11 @@
 
                     <div class="col-md-12">
                         <?= $this->Form->control('website', [
-                            'type' => 'text',
+                            'type' => 'url',
                             'class' => 'form-control',
                             'label' => 'Current Business Website',
-                            'placeholder' => 'https://example.com',
-                            'maxlength' => 255,
-                            'pattern' => "https://.*"
+                            'placeholder' => 'Your Business Website',
+                            'maxlength' => 255
                         ]) ?>
                     </div>
 

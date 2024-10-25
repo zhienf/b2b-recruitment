@@ -71,6 +71,22 @@ class OrganisationsController extends AppController
         if ($this->request->is('post')) {
             $organisation = $this->Organisations->patchEntity($organisation, $this->request->getData());
             if ($this->Organisations->save($organisation)) {
+                $this->Flash->success(__('The organisation has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The organisation could not be saved. Please, try again.'));
+        }
+        $this->set(compact('organisation'));
+    }
+
+
+    public function register()
+    {
+        $organisation = $this->Organisations->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $organisation = $this->Organisations->patchEntity($organisation, $this->request->getData());
+            if ($this->Organisations->save($organisation)) {
                 $this->Flash->success(__('Organisation registration is successful! We will get in touch with you soon.'));
             } else {
                 $this->Flash->error(__('Organisation registration failed! Please, try again.'));

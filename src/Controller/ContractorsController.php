@@ -87,6 +87,22 @@ class ContractorsController extends AppController
         if ($this->request->is('post')) {
             $contractor = $this->Contractors->patchEntity($contractor, $this->request->getData());
             if ($this->Contractors->save($contractor)) {
+                $this->Flash->success(__('The contractor has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The contractor could not be saved. Please, try again.'));
+        }
+        $skills = $this->Contractors->Skills->find('list', limit: 200)->all();
+        $this->set(compact('contractor', 'skills'));
+    }
+
+    public function register()
+    {
+        $contractor = $this->Contractors->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $contractor = $this->Contractors->patchEntity($contractor, $this->request->getData());
+            if ($this->Contractors->save($contractor)) {
                 $this->Flash->success(__('Contractor registration is successful! We will get in touch with you soon.'));
             } else {
                 $this->Flash->error(__('Contractor registration failed! Please try again.'));
