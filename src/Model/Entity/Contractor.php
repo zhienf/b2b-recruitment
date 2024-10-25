@@ -38,4 +38,10 @@ class Contractor extends Entity
         'projects' => true,
         'skills' => true,
     ];
+
+    protected function _getContractorDescriptor(): string
+    {
+        // John Doe <john.doe@email.com>"
+        return $this->first_name . ' ' . $this->last_name . ' <' . $this->email . '>';
+    }
 }

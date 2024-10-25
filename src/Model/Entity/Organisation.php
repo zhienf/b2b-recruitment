@@ -40,4 +40,10 @@ class Organisation extends Entity
         'enquiries' => true,
         'projects' => true,
     ];
+
+    protected function _getOrganisationDescriptor(): string
+    {
+        // Tech Innovators (Technology)
+        return $this->business_name . ' (' . $this->industry . ')';
+    }
 }

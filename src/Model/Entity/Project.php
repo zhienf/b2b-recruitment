@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $description
  * @property string $management_tool_link
- * @property \Cake\I18n\DateTime $due_date
- * @property \Cake\I18n\DateTime $last_checked
+ * @property \Cake\I18n\Date $due_date
+ * @property \Cake\I18n\Date $last_checked
  * @property bool $complete
  * @property string|null $contractor_id
  * @property string $organisation_id

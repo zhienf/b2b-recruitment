@@ -85,14 +85,14 @@ class ProjectsTable extends Table
             ->notEmptyString('management_tool_link');
 
         $validator
-            ->dateTime('due_date')
+            ->date('due_date')
             ->requirePresence('due_date', 'create')
-            ->notEmptyDateTime('due_date');
+            ->notEmptyDate('due_date');
 
         $validator
-            ->dateTime('last_checked')
+            ->date('last_checked')
             ->requirePresence('last_checked', 'create')
-            ->notEmptyDateTime('last_checked');
+            ->notEmptyDate('last_checked');
 
         $validator
             ->boolean('complete')

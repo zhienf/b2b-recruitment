@@ -35,20 +35,26 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('business_name') ?></th>
+                    <th><?= $this->Paginator->sort('current_website') ?></th>
                     <th><?= $this->Paginator->sort('contact_first_name') ?></th>
                     <th><?= $this->Paginator->sort('contact_last_name') ?></th>
                     <th><?= $this->Paginator->sort('contact_email') ?></th>
-                    <th><?= $this->Paginator->sort('current_website') ?></th>
+                    <th><?= $this->Paginator->sort('total_projects') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($organisations as $organisation): ?>
                 <tr>
-                    <td><?= h($organisation->id) ?></td>
                     <td><?= h($organisation->business_name) ?></td>
+                    <td><?= $organisation->current_website
+                            ? $this->Html->link(
+                                h($organisation->current_website),
+                                $organisation->current_website,
+                                ['target' => '_blank', 'escape' => false]
+                            )
+                            : '-' ?></td>
                     <td><?= h($organisation->contact_first_name) ?></td>
                     <td><?= h($organisation->contact_last_name) ?></td>
                     <td><?= $organisation->contact_email
@@ -57,14 +63,8 @@
                                 'mailto:' . h($organisation->contact_email),
                                 ['escape' => false]
                             )
-                            : '' ?></td>
-                    <td><?= $organisation->current_website
-                            ? $this->Html->link(
-                                h($organisation->current_website),
-                                $organisation->current_website,
-                                ['target' => '_blank', 'escape' => false]
-                            )
-                            : '' ?></td>
+                            : '-' ?></td>
+                    <td><?= h($organisation->total_projects) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $organisation->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $organisation->id]) ?>

@@ -20,8 +20,17 @@ class OrganisationsController extends AppController
         $business_name = $this->request->getQuery('business_name');
         $sortBy = $this->request->getQuery('sort_by');
 
-        $query = $this->Organisations->find()
-            ->select(['Organisations.id', 'Organisations.business_name', 'Organisations.contact_first_name','Organisations.contact_last_name', 'Organisations.contact_email', 'Organisations.current_website']);
+        $query = $this->Organisations->find();
+        $query->select([
+            'Organisations.id',
+            'Organisations.business_name',
+            'Organisations.contact_first_name',
+            'Organisations.contact_last_name',
+            'Organisations.contact_email',
+            'Organisations.current_website',
+            'total_projects' => $query->func()->count('Projects.id')])
+            ->leftJoinWith('Projects')
+            ->groupBy(['Organisations.id']);
 
         if (!empty($business_name)) {
             $query->where(['Organisations.business_name LIKE' => '%' . $business_name . '%']);

@@ -56,18 +56,17 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('first_name') ?></th>
                     <th><?= $this->Paginator->sort('last_name') ?></th>
                     <th><?= $this->Paginator->sort('phone_number') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
+                    <th><?= $this->Paginator->sort('total_projects') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($contractors as $contractor): ?>
                 <tr>
-                    <td><?= h($contractor->id) ?></td>
                     <td><?= h($contractor->first_name) ?></td>
                     <td><?= h($contractor->last_name) ?></td>
                     <td><?= h($contractor->phone_number) ?></td>
@@ -77,7 +76,8 @@
                                 'mailto:' . h($contractor->email),
                                 ['escape' => false]
                             )
-                            : '' ?></td>
+                            : '-' ?></td>
+                    <td><?= h($contractor->total_projects) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $contractor->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contractor->id]) ?>

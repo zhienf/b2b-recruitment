@@ -24,8 +24,16 @@ class ContractorsController extends AppController
         $sortBy = $this->request->getQuery('sort_by');
         $selectedSkills = $this->request->getQuery('skills._ids');
 
-        $query = $this->Contractors->find()
-            ->select(['Contractors.id', 'Contractors.first_name', 'Contractors.last_name', 'Contractors.email', 'Contractors.phone_number']);
+        $query = $this->Contractors->find();
+        $query->select([
+                'Contractors.id',
+                'Contractors.first_name',
+                'Contractors.last_name',
+                'Contractors.email',
+                'Contractors.phone_number',
+                'total_projects' => $query->func()->count('Projects.id')])
+            ->leftJoinWith('Projects')
+            ->groupBy(['Contractors.id']);
 
         // attach search fields from get request to the query using query builder
         if (!empty($firstName)) {

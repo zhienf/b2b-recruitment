@@ -42,7 +42,7 @@ class ContractorsTable extends Table
         parent::initialize($config);
 
         $this->setTable('contractors');
-        $this->setDisplayField('first_name');
+        $this->setDisplayField('contractor_descriptor');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Enquiries', [

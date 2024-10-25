@@ -41,7 +41,7 @@ class OrganisationsTable extends Table
         parent::initialize($config);
 
         $this->setTable('organisations');
-        $this->setDisplayField('business_name');
+        $this->setDisplayField('organisation_descriptor');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Enquiries', [

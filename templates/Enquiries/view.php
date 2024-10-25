@@ -16,12 +16,8 @@
     </aside>
     <div class="column column-80">
         <div class="enquiries view content">
-            <h3><?= h($enquiry->first_name) ?></h3>
+            <h3><?= __('Enquiry from {0} {1}', h($enquiry->first_name), h($enquiry->last_name)) ?></h3>
             <table>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= h($enquiry->id) ?></td>
-                </tr>
                 <tr>
                     <th><?= __('First Name') ?></th>
                     <td><?= h($enquiry->first_name) ?></td>
@@ -38,7 +34,7 @@
                                 'mailto:' . h($enquiry->email),
                                 ['escape' => false]
                             )
-                            : '' ?></td>
+                            : '-' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Phone Number') ?></th>
@@ -50,7 +46,7 @@
                 </tr>
                 <tr>
                     <th><?= __('Linked Contractor') ?></th>
-                    <td><?= $enquiry->hasValue('contractor') ? $this->Html->link($enquiry->contractor->first_name, ['controller' => 'Contractors', 'action' => 'view', $enquiry->contractor->id]) : '<em>Not Linked</em>' ?></td>
+                    <td><?= $enquiry->hasValue('contractor') ? $this->Html->link($enquiry->contractor->first_name . ' ' . $enquiry->contractor->last_name, ['controller' => 'Contractors', 'action' => 'view', $enquiry->contractor->id]) : '<em>Not Linked</em>' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Replied?') ?></th>

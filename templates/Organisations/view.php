@@ -19,12 +19,14 @@
             <h3><?= h($organisation->business_name) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= h($organisation->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Business Name') ?></th>
-                    <td><?= h($organisation->business_name) ?></td>
+                    <th><?= __('Current Website') ?></th>
+                    <td><?= $organisation->current_website
+                            ? $this->Html->link(
+                                h($organisation->current_website),
+                                $organisation->current_website,
+                                ['target' => '_blank', 'escape' => false]
+                            )
+                            : '-' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Contact First Name') ?></th>
@@ -42,17 +44,7 @@
                                 'mailto:' . h($organisation->contact_email),
                                 ['escape' => false]
                             )
-                            : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Current Website') ?></th>
-                    <td><?= $organisation->current_website
-                            ? $this->Html->link(
-                                h($organisation->current_website),
-                                $organisation->current_website,
-                                ['target' => '_blank', 'escape' => false]
-                            )
-                            : '' ?></td>
+                            : '-' ?></td>
                 </tr>
             </table>
             <div class="text">
@@ -67,8 +59,6 @@
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Contractor Id') ?></th>
                             <th><?= __('First Name') ?></th>
                             <th><?= __('Last Name') ?></th>
                             <th><?= __('Email') ?></th>
@@ -78,8 +68,6 @@
                         </tr>
                         <?php foreach ($organisation->enquiries as $enquiry) : ?>
                         <tr>
-                            <td><?= h($enquiry->id) ?></td>
-                            <td><?= h($enquiry->contractor_id) ?></td>
                             <td><?= h($enquiry->first_name) ?></td>
                             <td><?= h($enquiry->last_name) ?></td>
                             <td><?= $enquiry->email
@@ -88,18 +76,19 @@
                                         'mailto:' . h($enquiry->email),
                                         ['escape' => false]
                                     )
-                                    : '' ?></td>
+                                    : '-' ?></td>
                             <td><?= h($enquiry->phone_number) ?></td>
                             <td><?= h($enquiry->message) ?></td>
                             <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Enquiries', 'action' => 'view', $enquiry->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Enquiries', 'action' => 'edit', $enquiry->id]) ?>
+                                <?= $this->Html->link(__('Manage'), ['controller' => 'Enquiries', 'action' => 'view', $enquiry->id]) ?>
                                 <?= $this->Form->postLink(__('Delete'), ['controller' => 'Enquiries', 'action' => 'delete', $enquiry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $enquiry->id)]) ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </table>
                 </div>
+                <?php else : ?>
+                    <p><?= __('<em>No related enquiries.</em>') ?></p>
                 <?php endif; ?>
             </div>
             <div class="related">
@@ -108,32 +97,32 @@
                 <div class="table-responsive">
                     <table>
                         <tr>
-                            <th><?= __('Id') ?></th>
                             <th><?= __('Name') ?></th>
-                            <th><?= __('Description') ?></th>
+                            <th><?= __('Contractor Name') ?></th>
                             <th><?= __('Management Tool Link') ?></th>
                             <th><?= __('Due Date') ?></th>
                             <th><?= __('Last Checked') ?></th>
                             <th><?= __('Complete') ?></th>
-                            <th><?= __('Contractor Name') ?></th>
                             <th class="actions"><?= __('Actions') ?></th>
                         </tr>
                         <?php foreach ($organisation->projects as $project) : ?>
                         <tr>
-                            <td><?= h($project->id) ?></td>
                             <td><?= h($project->name) ?></td>
-                            <td><?= h($project->description) ?></td>
+                            <td><?= $project->contractor
+                                    ? $this->Html->link(
+                                        h($project->contractor->first_name . ' ' . $project->contractor->last_name),
+                                        ['controller' => 'Contractors', 'action' => 'view', $project->contractor_id])
+                                    : '-' ?></td>
                             <td><?= $project->management_tool_link
                                     ? $this->Html->link(
                                         h($project->management_tool_link),
                                         $project->management_tool_link,
                                         ['target' => '_blank', 'escape' => false]
                                     )
-                                    : '' ?></td>
+                                    : '-' ?></td>
                             <td><?= $this->Time->format($project->due_date, 'dd/MM/yyyy') ?></td>
                             <td><?= $this->Time->format($project->last_checked, 'dd/MM/yyyy') ?></td>
-                            <td><?= h($project->complete) ? 'Completed' : 'In Progress' ?></td>
-                            <td><?= $this->Html->link(h($project->contractor->first_name . ' ' . $project->contractor->last_name), ['controller' => 'Contractors', 'action' => 'view', $project->contractor_id]) ?></td>
+                            <td><?= h($project->complete) ? '<em>Completed</em>' : '<em>In Progress</em>' ?></td>
                             <td class="actions">
                                 <?= $this->Html->link(__('View'), ['controller' => 'Projects', 'action' => 'view', $project->id]) ?>
                                 <?= $this->Html->link(__('Edit'), ['controller' => 'Projects', 'action' => 'edit', $project->id]) ?>
@@ -143,6 +132,8 @@
                         <?php endforeach; ?>
                     </table>
                 </div>
+                <?php else : ?>
+                    <p><?= __('<em>No related projects.</em>') ?></p>
                 <?php endif; ?>
             </div>
         </div>

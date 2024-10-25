@@ -20,8 +20,8 @@
             <fieldset>
                 <h3><?= __('Link Enquiry to Organisation / Contractor') ?></h3>
                 <?php
-                    echo $this->Form->control('organisation_id', ['options' => $organisations, 'empty' => true]);
-                    echo $this->Form->control('contractor_id', ['options' => $contractors, 'empty' => true]);
+                    echo $this->Form->control('organisation_id', ['options' => $organisations, 'empty' => '-- Select an organisation --']);
+                    echo $this->Form->control('contractor_id', ['options' => $contractors, 'empty' => '-- Select a contractor --']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

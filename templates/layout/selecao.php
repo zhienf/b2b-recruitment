@@ -54,9 +54,10 @@ $description = 'Jims Recruiting';
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
         <a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']); ?>" class="logo d-flex align-items-center">
-            <!-- Uncomment the line below if you also wish to use an image logo -->
-            <!-- <img src="assets/img/logo.png" alt=""> -->
-            <h1 class="sitename">Jims Recruiting</h1>
+<!--            <h1 class="sitename">Jims Recruiting</h1>-->
+            <?= $this->Html->image('/img/jims-logo-light.png', [
+                'alt' => 'Logo',
+            ]) ?>
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -71,6 +72,7 @@ $description = 'Jims Recruiting';
                     </ul>
                 </li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'contact']) ?>">Contact Us</a></li>
+                <li><a href="<?= $this->Url->build(['controller' => 'Projects', 'action' => 'index']) ?>">Admin Dashboard</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

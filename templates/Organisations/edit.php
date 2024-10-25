@@ -22,12 +22,52 @@
             <fieldset>
                 <h3><?= __('Edit Organisation') ?></h3>
                 <?php
-                    echo $this->Form->control('business_name');
-                    echo $this->Form->control('contact_first_name');
-                    echo $this->Form->control('contact_last_name');
-                    echo $this->Form->control('contact_email');
-                    echo $this->Form->control('current_website');
-                    echo $this->Form->control('industry');
+                echo $this->Form->control('business_name', [
+                    'label' => 'Business Name <span style="color: red;">*</span>',
+                    'escape' => false,
+                    'required' => true,
+                    'maxlength' => 255,
+                    'class' => 'form-control'
+                ]);
+
+                echo $this->Form->control('contact_first_name', [
+                    'label' => 'Contact First Name <span style="color: red;">*</span>',
+                    'escape' => false,
+                    'required' => true,
+                    'maxlength' => 255,
+                    'class' => 'form-control'
+                ]);
+
+                echo $this->Form->control('contact_last_name', [
+                    'label' => 'Contact Last Name <span style="color: red;">*</span>',
+                    'escape' => false,
+                    'required' => true,
+                    'maxlength' => 255,
+                    'class' => 'form-control'
+                ]);
+
+                echo $this->Form->control('contact_email', [
+                    'label' => 'Contact Email <span style="color: red;">*</span>',
+                    'type' => 'email',
+                    'escape' => false,
+                    'required' => true,
+                    'maxlength' => 255,
+                    'class' => 'form-control',
+                ]);
+
+                echo $this->Form->control('current_website', [
+                    'label' => 'Current Website',
+                    'type' => 'url',
+                    'class' => 'form-control',
+                    'maxlength' => 255,
+                    'placeholder' => 'https://example.com'
+                ]);
+
+                echo $this->Form->control('industry', [
+                    'label' => 'Industry',
+                    'maxlength' => 255,
+                    'class' => 'form-control'
+                ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

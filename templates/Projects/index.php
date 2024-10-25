@@ -64,22 +64,22 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name') ?></th>
+                    <th><?= $this->Paginator->sort('organisation_id') ?></th>
+                    <th><?= $this->Paginator->sort('contractor_id') ?></th>
                     <th><?= $this->Paginator->sort('management_tool_link') ?></th>
                     <th><?= $this->Paginator->sort('due_date') ?></th>
                     <th><?= $this->Paginator->sort('last_checked') ?></th>
                     <th><?= $this->Paginator->sort('complete') ?></th>
-                    <th><?= $this->Paginator->sort('contractor_id') ?></th>
-                    <th><?= $this->Paginator->sort('organisation_id') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($projects as $project): ?>
                 <tr>
-                    <td><?= h($project->id) ?></td>
                     <td><?= h($project->name) ?></td>
+                    <td><?= $project->hasValue('organisation') ? $this->Html->link($project->organisation->business_name, ['controller' => 'Organisations', 'action' => 'view', $project->organisation->id]) : '-' ?></td>
+                    <td><?= $project->hasValue('contractor') ? $this->Html->link($project->contractor->first_name . ' ' . $project->contractor->last_name, ['controller' => 'Contractors', 'action' => 'view', $project->contractor->id]) : '-' ?></td>
                     <td><?= $project->management_tool_link
                             ? $this->Html->link(
                                 h($project->management_tool_link),
@@ -89,9 +89,7 @@
                             : '' ?></td>
                     <td><?= $this->Time->format($project->due_date, 'dd/MM/yyyy') ?></td>
                     <td><?= $this->Time->format($project->last_checked, 'dd/MM/yyyy') ?></td>
-                    <td><?= h($project->complete) ? 'Completed' : 'In Progress' ?></td>
-                    <td><?= $project->hasValue('contractor') ? $this->Html->link($project->contractor->first_name . ' ' . $project->contractor->last_name, ['controller' => 'Contractors', 'action' => 'view', $project->contractor->id]) : '' ?></td>
-                    <td><?= $project->hasValue('organisation') ? $this->Html->link($project->organisation->business_name, ['controller' => 'Organisations', 'action' => 'view', $project->organisation->id]) : '' ?></td>
+                    <td><?= h($project->complete) ? '<em>Completed</em>' : '<em>In Progress</em>' ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $project->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $project->id]) ?>
