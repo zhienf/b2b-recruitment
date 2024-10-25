@@ -8,7 +8,7 @@
             <div class="carousel-container">
                 <h2 class="animate__animated animate__fadeInDown">Efficient B2B Recruitment Solutions</h2>
                 <p class="animate__animated animate__fadeInUp">With years of experience in connecting businesses to skilled contractors, Nathan Jims simplifies recruitment. From local SMEs to large-scale business projects, we help you find the right talent for the job.</p>
-                <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Get Started as an Organisation</a>
+                <a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'organisation']) ?>" class="btn-get-started animate__animated animate__fadeInUp scrollto">Get Started as an Organisation</a>
             </div>
         </div>
 
@@ -17,7 +17,7 @@
             <div class="carousel-container">
                 <h2 class="animate__animated animate__fadeInDown">Opportunities Tailored for Your Expertise</h2>
                 <p class="animate__animated animate__fadeInUp">Are you a contractor looking for your next project? Register with us to gain access to exclusive business opportunities. We match your skills with projects that need your expertise.</p>
-                <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Register as a Contractor</a>
+                <a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'contractor']) ?>" class="btn-get-started animate__animated animate__fadeInUp scrollto">Register as a Contractor</a>
             </div>
         </div>
 

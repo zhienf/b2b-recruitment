@@ -62,11 +62,14 @@ class EnquiriesController extends AppController
             $enquiry = $this->Enquiries->patchEntity($enquiry, $this->request->getData());
             if ($this->Enquiries->save($enquiry)) {
                 $this->Flash->success(__('Your message has been sent. Thank you!'));
-
-                return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'contact']);
+            } else {
+                $this->Flash->error(__('Your message could not be sent. Please, try again.'));
             }
-            $this->Flash->error(__('The message could not be sent. Please, try again.'));
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'contact']);
         }
+        $organisations = $this->Enquiries->Organisations->find('list', limit: 200)->all();
+        $contractors = $this->Enquiries->Contractors->find('list', limit: 200)->all();
+        $this->set(compact('enquiry', 'organisations', 'contractors'));
     }
 
     /**

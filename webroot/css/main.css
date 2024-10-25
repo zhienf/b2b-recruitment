@@ -620,6 +620,45 @@ section,
 }
 
 /*--------------------------------------------------------------
+# Form Titles
+--------------------------------------------------------------*/
+.form-title {
+    padding-bottom: 60px;
+    text-align: center;
+    color: var(--default-color);
+    background-color: var(--background-color);
+    scroll-margin-top: 77px;
+    overflow: visible;
+}
+
+.form-title p {
+    color: var(--heading-color);
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: var(--heading-font);
+}
+
+.form-title p::before {
+    content: "";
+    width: 120px;
+    height: 1px;
+    display: inline-block;
+    background: var(--accent-color);
+    margin: 4px 10px;
+}
+
+.form-title p::after {
+    content: "";
+    width: 120px;
+    height: 1px;
+    display: inline-block;
+    background: var(--accent-color);
+    margin: 4px 10px;
+}
+
+/*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
 .hero {

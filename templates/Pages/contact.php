@@ -1,10 +1,9 @@
 <section id="contact" class="contact section">
 
-    <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
         <p>Contact Us</p>
-    </div><!-- End Section Title -->
+    </div>
 
     <div class="container" data-aos="fade" data-aos-delay="100">
 
@@ -48,31 +47,45 @@
                 ]); ?>
                 <div class="php-email-form row gy-4" data-aos="fade-up" data-aos-delay="200">
 
+                    <div class="col-md-12 text-center">
+                        <?= $this->Flash->render() ?>
+                    </div>
+
                     <div class="col-md-6">
-                        <?= $this->Form->text('first_name', [
+                        <?= $this->Form->control('first_name', [
+                            'type' => 'text',
+                            'label' => 'First Name <span style="color: red;">*</span>',
                             'class' => "form-control",
-                            'id' => "first-name",
-                            'placeholder' => "Your First Name",
+                            'placeholder' => "Your First Name ",
+                            'escape' => false,
+                            'maxlength' => 255,
                             'required' => true
                         ]) ?>
                         <div class="invalid-feedback" data-sb-feedback="name:required">A first name is required.</div>
                     </div>
 
                     <div class="col-md-6">
-                        <?= $this->Form->text('last_name', [
+                        <?= $this->Form->control('last_name', [
+                            'type' => 'text',
+                            'label' => 'Last Name <span style="color: red;">*</span>',
                             'class' => "form-control",
-                            'id' => "last-name",
                             'placeholder' => "Your Last Name",
+                            'escape' => false,
+                            'maxlength' => 255,
                             'required' => true
                         ]) ?>
                         <div class="invalid-feedback" data-sb-feedback="name:required">A last name is required.</div>
                     </div>
 
                     <div class="col-md-6 ">
-                        <?= $this->Form->email('email', [
+                        <?= $this->Form->control('email', [
+                            'type' => 'email',
+                            'label' => 'Email Address <span style="color: red;">*</span>',
                             'class' => "form-control",
-                            'id' => "email",
-                            'placeholder' => "Your Email",
+                            'placeholder' => "email@example.com",
+                            'escape' => false,
+                            'maxlength' => 255,
+                            'pattern' => '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',
                             'required' => true
                         ]) ?>
                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
@@ -82,30 +95,35 @@
                     <div class="col-md-6">
                         <?= $this->Form->control('phone_number', [
                             'type' => 'text',
-                            'label' => false,
+                            'label' => 'Phone Number <span style="color: red;">*</span>',
                             'class' => "form-control",
                             'placeholder' => "Your Phone Number",
+                            'escape' => false,
+                            'maxlength' => 10,
+                            'pattern' => '0[23478]\d{8}',
                             'required' => true
                         ]) ?>
+                        <small class="form-text text-muted">
+                            Australian mobile numbers: 04xxxxxxxx<br>
+                            Australian landline numbers: 02xxxxxxxx, 03xxxxxxxx, 07xxxxxxxx, 08xxxxxxxx
+                        </small>
                     </div>
 
                     <div class="col-md-12">
                         <?= $this->Form->control('message', [
                             'type' => 'textarea',
-                            'label' => false,
+                            'label' => 'Message <span style="color: red;">*</span>',
                             'class' => "form-control",
                             'rows' => 6,
                             'placeholder' => "Message",
+                            'escape' => false,
+                            'maxlength' => 255,
                             'required' => true
                         ]) ?>
                     </div>
 
                     <div class="col-md-12 text-center">
                         <?= $this->Form->button(__('Send Message')) ?>
-                    </div>
-
-                    <div class="col-md-12 text-center">
-                        <?= $this->Flash->render() ?>
                     </div>
 
                 </div>

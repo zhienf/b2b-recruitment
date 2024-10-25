@@ -9,16 +9,15 @@
 
 <section id="form" class="form section">
 
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Register</h2>
+    <div class="container form-title" data-aos="fade-up">
         <p>Register as a Contractor</p>
     </div>
 
     <div class="container" data-aos="fade" data-aos-delay="100">
 
-        <div class="row gy-4">
+        <div class="row justify-content-center">
 
-            <div class="col-lg">
+            <div class="col-lg-8 col-md-8">
                 <?= $this->Form->create(null, [
                     'id' => 'contractorForm',
                     'url' => [
@@ -29,31 +28,48 @@
                 ]); ?>
                 <div class="php-email-form row gy-4" data-aos="fade-up" data-aos-delay="200">
 
-                    <div class="col-md-6">
-                        <?= $this->Form->text('first_name', [
-                            'class' => "form-control",
-                            'id' => "first-name",
-                            'placeholder' => "Your First Name",
-                            'required' => true
-                        ]) ?>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A first name is required.</div>
+                    <div class="col-md-12 text-center">
+                        <?= $this->Flash->render() ?>
                     </div>
 
                     <div class="col-md-6">
-                        <?= $this->Form->text('last_name', [
-                            'class' => "form-control",
-                            'id' => "last-name",
-                            'placeholder' => "Your Last Name",
+                        <?= $this->Form->control('first_name', [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'label' => 'First Name <span style="color: red;">*</span>',
+                            'id' => 'first-name',
+                            'placeholder' => 'Your First Name',
+                            'escape' => false,
+                            'maxlength' => 255,
                             'required' => true
                         ]) ?>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A last name is required.</div>
+                        <div class="invalid-feedback" data-sb-feedback="firstname:required">A first name is required.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <?= $this->Form->control('last_name', [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'label' => 'Last Name <span style="color: red;">*</span>',
+                            'id' => 'last-name',
+                            'placeholder' => 'Your Last Name',
+                            'escape' => false,
+                            'maxlength' => 255,
+                            'required' => true
+                        ]) ?>
+                        <div class="invalid-feedback" data-sb-feedback="lastname:required">A last name is required.</div>
                     </div>
 
                     <div class="col-md-6 ">
-                        <?= $this->Form->email('email', [
-                            'class' => "form-control",
-                            'id' => "email",
-                            'placeholder' => "Your Email",
+                        <?= $this->Form->control('email', [
+                            'type' => 'email',
+                            'class' => 'form-control',
+                            'label' => 'Email Address <span style="color: red;">*</span>',
+                            'id' => 'email',
+                            'placeholder' => 'email@example.com',
+                            'escape' => false,
+                            'maxlength' => 255,
+                            'pattern' => '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$',
                             'required' => true
                         ]) ?>
                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
@@ -63,44 +79,67 @@
                     <div class="col-md-6">
                         <?= $this->Form->control('phone_number', [
                             'type' => 'text',
-                            'label' => false,
-                            'class' => "form-control",
-                            'placeholder' => "Your Phone Number",
+                            'class' => 'form-control',
+                            'label' => 'Phone Number <span style="color: red;">*</span>',
+                            'placeholder' => 'Your Phone Number',
+                            'escape' => false,
+                            'pattern' => '0[23478]\d{8}',
+                            'maxlength' => 10,
                             'required' => true
                         ]) ?>
+                        <small class="form-text text-muted">
+                            Australian mobile numbers: 04xxxxxxxx<br>
+                            Australian landline numbers: 02xxxxxxxx, 03xxxxxxxx, 07xxxxxxxx, 08xxxxxxxx
+                        </small>
+                        <div class="invalid-feedback">Please enter a valid Australian phone number.</div>
                     </div>
 
                     <div class="col-md-12">
                         <?= $this->Form->control('skills._ids', [
+                            'type' => 'select',
                             'options' => $skills,
                             'multiple' => true,
-                            'id' => 'skills-ids'
-                        ]);
-                        ?>
+                            'class' => 'form-control',
+                            'label' => 'Skills <span style="color: red;">*</span>',
+                            'escape' => false,
+                            'id' => 'skills-ids',
+                        ]) ?>
+                        <div class="invalid-feedback" id="skills-feedback">Please select at least one skill.</div>
                     </div>
 
                     <div class="col-md-12 text-center">
                         <?= $this->Form->button(__('Register')) ?>
                     </div>
 
-                    <div class="col-md-12 text-center">
-                        <?= $this->Flash->render() ?>
-                    </div>
-
                 </div>
                 <?= $this->Form->end() ?>
-            </div><!-- End Contact Form -->
+            </div>
 
         </div>
 
     </div>
 
-</section><!-- /Contact Section -->
+</section>
 
 <script>
+    document.getElementById('contractorForm').addEventListener('submit', function(event) {
+        const skillsField = document.querySelector('#skills-ids');
+        const skillsFeedback = document.querySelector('#skills-feedback');
+
+        if (!skillsField.value) {
+            event.preventDefault();  // Prevent form submission
+            skillsField.classList.add('is-invalid');
+            skillsFeedback.style.display = 'block';
+        } else {
+            skillsField.classList.remove('is-invalid');
+            skillsFeedback.style.display = 'none';
+        }
+    });
+
     const element = document.querySelector('#skills-ids');
     const choices = new Choices(element, {
         removeItems: true,
         removeItemButton: true
     });
 </script>
+
