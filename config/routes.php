@@ -61,7 +61,6 @@ return function (RouteBuilder $routes): void {
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
-        $builder->connect('/pages/contractor', ['controller' => 'Pages', 'action' => 'contractor']);
         $builder->connect('/pages/*', 'Pages::display');
 
 

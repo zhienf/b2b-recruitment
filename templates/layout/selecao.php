@@ -23,8 +23,7 @@ $description = 'Jims Recruiting';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?= $description ?>:
-        <?= $this->fetch('title') ?>
+        <?= $description ?>: <?= $title ?? 'Home' ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 
@@ -54,7 +53,6 @@ $description = 'Jims Recruiting';
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
         <a href="<?= $this->Url->build(['controller' => 'Pages', 'action' => 'display', 'home']); ?>" class="logo d-flex align-items-center">
-<!--            <h1 class="sitename">Jims Recruiting</h1>-->
             <?= $this->Html->image('/img/jims-logo-light.png', [
                 'alt' => 'Logo',
             ]) ?>

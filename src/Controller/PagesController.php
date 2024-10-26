@@ -58,6 +58,10 @@ class PagesController extends AppController
      */
     public function display(string ...$path): ?Response
     {
+        // set custom title for each page
+        $title = !empty($path) ? ucfirst(end($path)) : 'Home';
+        $this->set('title', $title);
+
         if (!$path) {
             return $this->redirect('/');
         }
@@ -74,6 +78,13 @@ class PagesController extends AppController
         }
         $this->set(compact('page', 'subpage'));
 
+        // pass 'skills' variable to view for contractor registration page
+        if ($page === 'contractor') {
+            $Skills = $this->fetchTable('Skills');
+            $skills = $Skills->find('list', limit: 200)->all();
+            $this->set(compact('skills'));
+        }
+
         try {
             return $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {
@@ -82,12 +93,5 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
-    }
-
-    public function contractor()
-    {
-        $Skills = $this->fetchTable('Skills');
-        $skills = $Skills->find('list', limit: 200)->all();
-        $this->set(compact('skills'));
     }
 }
