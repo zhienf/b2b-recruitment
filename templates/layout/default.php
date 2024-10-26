@@ -58,6 +58,10 @@ $description = 'B2B Project Recruit';
                 'controller' => 'Enquiries',
                 'action' => 'index'
             ], []) ?>
+            <?= $this->Html->link('Skills', [
+                'controller' => 'Skills',
+                'action' => 'index'
+            ], []) ?>
             <?= $this->Html->link('Business Website', [
                 'controller' => 'Pages',
                 'action' => 'display',

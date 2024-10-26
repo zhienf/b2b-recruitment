@@ -11,7 +11,6 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -19,7 +18,6 @@
             <tbody>
                 <?php foreach ($skills as $skill): ?>
                 <tr>
-                    <td><?= h($skill->id) ?></td>
                     <td><?= h($skill->name) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $skill->id]) ?>

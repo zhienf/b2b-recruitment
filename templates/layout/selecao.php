@@ -36,10 +36,8 @@ $description = 'Jims Recruiting';
     <?= $this->Html->css('bootstrap.css') ?>
     <?= $this->Html->css('bootstrap-icons/bootstrap-icons.css') ?>
     <?= $this->Html->css('aos.css') ?>
-    <?= $this->Html->css('animate.css') ?>
-    <?= $this->Html->css('glightbox.css') ?>
-    <?= $this->Html->css('swiper-bundle.min.css') ?>
 
+    <!-- Main CSS File -->
     <?= $this->Html->css(['main']) ?>
 
     <?= $this->fetch('meta') ?>
@@ -115,13 +113,7 @@ $description = 'Jims Recruiting';
 
 <!-- Vendor JS Files -->
 <?= $this->Html->script('bootstrap.bundle.js'); ?>
-<?= $this->Html->script('validate.js'); ?>
 <?= $this->Html->script('aos.js'); ?>
-<?= $this->Html->script('glightbox.js'); ?>
-<?= $this->Html->script('imagesloaded.pkgd.min.js'); ?>
-<?= $this->Html->script('isotope.pkgd.js'); ?>
-<?= $this->Html->script('swiper-bundle.min.js'); ?>
-
 
 <!-- Main JS File -->
 <?= $this->Html->script('main.js'); ?>

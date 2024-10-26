@@ -1,21 +1,12 @@
 /* Milligram overrides */
 :root {
-    /* The following are official CakePHP colors */
-    --color-cakephp-red: #ef6603;
-    --color-cakephp-gray: #404041;
-    --color-cakephp-blue: #2f85ae;
-    --color-cakephp-lightblue: #34bdd7;
-
-    --color-palatinate-blue: #0043ec;
-    --color-carrot-orange: #f09841;
-
-    /* These are additional colors */
+    --accent-orange: #ef6603;
     --color-lightgray: #606c76;
     --color-white: #fff;
 
     --old-main-bg: #f5f7fa;
     --color-main-bg: #fff;
-    --color-links: var(--color-cakephp-blue);
+    --color-links: #2f85ae;
     --color-links-active: #2a6496;
     --color-headings: #363637;
 
@@ -37,14 +28,14 @@
 }
 
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
-    background-color: var(--color-cakephp-red);
-    border-color: var(--color-cakephp-red);
+    background-color: var(--accent-orange);
+    border-color: var(--accent-orange);
 }
 
 a.button.login-button, a.button.logout-button {
-    background-color: var(--color-cakephp-red);
+    background-color: var(--accent-orange);
     color: var(--color-white);
-    border-color: var(--color-cakephp-red);
+    border-color: var(--accent-orange);
 }
 
 body {
@@ -132,10 +123,10 @@ th {
 }
 .top-nav-title a {
     font-size: 2.4rem;
-    color: var(--color-cakephp-red);
+    color: var(--accent-orange);
 }
 .top-nav-title span {
-    color: var(--color-cakephp-gray);
+    color: #404041;
 }
 .top-nav-links a {
     margin: 0 0.5rem;
@@ -236,7 +227,7 @@ input[type='color'] {
     text-align: center;
 }
 .pagination a {
-    color: var(--color-cakephp-blue);
+    color: var(--color-links);
     display: inline-block;
     font-size: 1.25rem;
     line-height: 3rem;

@@ -85,11 +85,11 @@ class EnquiriesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $enquiry = $this->Enquiries->patchEntity($enquiry, $this->request->getData());
             if ($this->Enquiries->save($enquiry)) {
-                $this->Flash->success(__('The enquiry has been saved.'));
+                $this->Flash->success(__('Organisation / Contractor updated successfully.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $enquiry->id]);
             }
-            $this->Flash->error(__('The enquiry could not be saved. Please, try again.'));
+            $this->Flash->error(__('Organisation / Contractor could not be updated. Please, try again.'));
         }
         $organisations = $this->Enquiries->Organisations->find('list', limit: 200)->all();
         $contractors = $this->Enquiries->Contractors->find('list', limit: 200)->all();

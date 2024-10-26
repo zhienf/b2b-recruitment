@@ -17,18 +17,6 @@
     <div class="column column-80">
         <div class="skills view content">
             <h3><?= h($skill->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= h($skill->id) ?></td>
-                </tr>
-            </table>
-            <div class="text">
-                <strong><?= __('Name') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($skill->name)); ?>
-                </blockquote>
-            </div>
             <div class="related">
                 <h4><?= __('Related Contractors') ?></h4>
                 <?php if (!empty($skill->contractors)) : ?>
@@ -58,6 +46,8 @@
                         <?php endforeach; ?>
                     </table>
                 </div>
+                <?php else : ?>
+                    <p><?= __('<em>No related contractors.</em>') ?></p>
                 <?php endif; ?>
             </div>
             <div class="related">
@@ -97,6 +87,8 @@
                         <?php endforeach; ?>
                     </table>
                 </div>
+                <?php else : ?>
+                    <p><?= __('<em>No related projects.</em>') ?></p>
                 <?php endif; ?>
             </div>
         </div>
