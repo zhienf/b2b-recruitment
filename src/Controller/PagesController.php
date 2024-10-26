@@ -42,7 +42,7 @@ class PagesController extends AppController
         // Make the current controller to use Freelancer layout
         $this->viewBuilder()->setLayout('selecao');
 
-        $this->Authentication->addUnauthenticatedActions(['display', 'contractor']);
+        $this->Authentication->addUnauthenticatedActions(['display']);
     }
     /**
      * Displays a view

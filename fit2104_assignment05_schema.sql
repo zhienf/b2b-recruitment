@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 16, 2024 at 03:48 AM
+-- Generation Time: Oct 26, 2024 at 01:03 PM
 -- Server version: 9.0.1
 -- PHP Version: 8.3.12
 
@@ -48,7 +48,6 @@ INSERT INTO `contractors` (`id`, `first_name`, `last_name`, `phone_number`, `ema
 ('14', 'James', 'Allen', '412 456 890', 'james.allen@example.com'),
 ('15', 'Isabella', 'Young', '412 567 901', 'isabella.young@example.com'),
 ('16', 'Daniel', 'Wright', '412 678 012', 'daniel.wright@example.com'),
-('17', 'Ava', 'Scott', '412 789 123', 'ava.scott@example.com'),
 ('18', 'Matthew', 'Adams', '412 890 234', 'matthew.adams@example.com'),
 ('19', 'Sophie', 'Nelson', '412 901 345', 'sophie.nelson@example.com'),
 ('2', 'Jane', 'Smith', '412 678 901', 'jane.smith@example.com'),
@@ -103,6 +102,15 @@ CREATE TABLE `contractors_skills` (
   `skill_id` char(36) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `contractors_skills`
+--
+
+INSERT INTO `contractors_skills` (`id`, `contractor_id`, `skill_id`) VALUES
+('40cb29f7-644b-4d04-8088-99e5873f54d8', '1', 'b45d4986-09a5-4381-8274-416b7a62f112'),
+('ba1ba143-fccf-4723-ace7-2b6dcae07b92', '10', 'b45d4986-09a5-4381-8274-416b7a62f112'),
+('52fdd468-1369-49a8-b8a5-2ad11c990d54', '15', 'f6a4f74d-93e4-481c-9d67-5293bdb13ce0');
+
 -- --------------------------------------------------------
 
 --
@@ -116,9 +124,20 @@ CREATE TABLE `enquiries` (
   `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `phone_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `message` text COLLATE utf8mb4_general_ci NOT NULL
+  `phone_number` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `message` text COLLATE utf8mb4_general_ci NOT NULL,
+  `replied` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `enquiries`
+--
+
+INSERT INTO `enquiries` (`id`, `organisation_id`, `contractor_id`, `first_name`, `last_name`, `email`, `phone_number`, `message`, `replied`) VALUES
+('1', '11', '1', 'Alice', 'Johnson', 'alice.johnson@email.com', '412 345 678', 'I\'m interested in your services.', 1),
+('2', '1', NULL, 'Bob', 'Smith', 'bob.smith@email.com', '400 123 456', 'Can I get more information on pricing?', 0),
+('3', '15', '16', 'Charlie', 'Brown', 'charlie.brown@email.com', '433 987 654', 'I\'d like to schedule a consultation.', 0),
+('4', NULL, NULL, 'David', 'Anderson', 'david.anderson@email.com', '421 765 432', 'Please send me the product brochure.', 0);
 
 -- --------------------------------------------------------
 
@@ -203,8 +222,8 @@ CREATE TABLE `projects` (
   `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `description` text COLLATE utf8mb4_general_ci NOT NULL,
   `management_tool_link` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `due_date` datetime NOT NULL,
-  `last_checked` datetime NOT NULL,
+  `due_date` date NOT NULL,
+  `last_checked` date NOT NULL,
   `complete` tinyint(1) NOT NULL,
   `contractor_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `organisation_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
@@ -215,56 +234,54 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `name`, `description`, `management_tool_link`, `due_date`, `last_checked`, `complete`, `contractor_id`, `organisation_id`) VALUES
-('1', 'Alpha Initiative', 'First phase of the new system development', 'http://pmtool.example.com/alpha', '2024-10-15 00:00:00', '2024-09-01 00:00:00', 0, '7', '3'),
-('10', 'Customer Feedback', 'Analyze customer feedback and make improvements', 'http://pmtool.example.com/feedback', '2024-10-25 00:00:00', '2024-09-27 00:00:00', 1, '11', '16'),
-('11', 'Sales Dashboard', 'Create a new sales dashboard', 'http://pmtool.example.com/sales-dashboard', '2024-10-05 00:00:00', '2024-09-28 00:00:00', 0, '3', '19'),
-('12', 'Product Launch', 'Launch the new product', 'http://pmtool.example.com/product-launch', '2024-11-10 00:00:00', '2024-09-30 00:00:00', 0, '2', '5'),
-('13', 'User Experience', 'Improve user experience based on feedback', 'http://pmtool.example.com/ux-improvement', '2024-12-05 00:00:00', '2024-10-01 00:00:00', 0, '20', '9'),
-('14', 'Tech Support', 'Enhance tech support services', 'http://pmtool.example.com/tech-support', '2024-10-15 00:00:00', '2024-10-02 00:00:00', 0, '13', '14'),
-('15', 'Data Migration', 'Migrate historical data to new system', 'http://pmtool.example.com/data-migration', '2024-11-05 00:00:00', '2024-10-04 00:00:00', 0, '10', '18'),
-('16', 'API Integration', 'Integrate new APIs', 'http://pmtool.example.com/api-integration', '2024-12-01 00:00:00', '2024-10-07 00:00:00', 0, '8', '20'),
-('17', 'Client Onboarding', 'Onboard new clients', 'http://pmtool.example.com/client-onboarding', '2024-10-20 00:00:00', '2024-10-10 00:00:00', 1, '18', '15'),
-('18', 'Performance Tuning', 'Tune application performance', 'http://pmtool.example.com/performance-tuning', '2024-11-20 00:00:00', '2024-10-12 00:00:00', 0, '4', '2'),
-('19', 'Backup System', 'Implement new backup system', 'http://pmtool.example.com/backup-system', '2024-12-20 00:00:00', '2024-10-15 00:00:00', 0, '16', '6'),
-('2', 'Beta Rollout', 'Second phase implementation', 'http://pmtool.example.com/beta', '2024-11-01 00:00:00', '2024-09-05 00:00:00', 0, '15', '6'),
-('20', 'Compliance Check', 'Ensure compliance with new regulations', 'http://pmtool.example.com/compliance', '2024-10-25 00:00:00', '2024-10-17 00:00:00', 1, '17', '4'),
-('21', 'Mobile App', 'Develop a mobile application', 'http://pmtool.example.com/mobile-app', '2024-11-30 00:00:00', '2024-10-20 00:00:00', 0, '22', '10'),
-('22', 'Customer Portal', 'Build a new customer portal', 'http://pmtool.example.com/customer-portal', '2024-12-15 00:00:00', '2024-10-22 00:00:00', 0, '21', '7'),
-('23', 'Internal Audit', 'Conduct an internal audit', 'http://pmtool.example.com/internal-audit', '2024-10-10 00:00:00', '2024-10-25 00:00:00', 1, '15', '11'),
-('24', 'Website Redesign', 'Redesign the company website', 'http://pmtool.example.com/website-redesign', '2024-11-10 00:00:00', '2024-10-27 00:00:00', 0, '9', '12'),
-('25', 'Vendor Management', 'Improve vendor management processes', 'http://pmtool.example.com/vendor-management', '2024-12-01 00:00:00', '2024-10-30 00:00:00', 0, '4', '13'),
-('26', 'Staff Recruitment', 'Recruit new staff members', 'http://pmtool.example.com/staff-recruitment', '2024-10-15 00:00:00', '2024-11-01 00:00:00', 0, '6', '18'),
-('27', 'Product Update', 'Update existing products', 'http://pmtool.example.com/product-update', '2024-11-20 00:00:00', '2024-11-03 00:00:00', 0, '13', '14'),
-('28', 'Client Feedback', 'Collect and analyze client feedback', 'http://pmtool.example.com/client-feedback', '2024-12-10 00:00:00', '2024-11-05 00:00:00', 0, '11', '6'),
-('29', 'Server Maintenance', 'Perform server maintenance', 'http://pmtool.example.com/server-maintenance', '2024-10-30 00:00:00', '2024-11-07 00:00:00', 1, '20', '9'),
-('3', 'Client Migration', 'Migrate clients to the new platform', 'http://pmtool.example.com/migration', '2024-12-01 00:00:00', '2024-09-10 00:00:00', 0, '12', '2'),
-('30', 'Software Upgrade', 'Upgrade the core software', 'http://pmtool.example.com/software-upgrade', '2024-11-15 00:00:00', '2024-11-10 00:00:00', 0, '7', '3'),
-('31', 'HR System', 'Implement new HR system', 'http://pmtool.example.com/hr-system', '2024-12-01 00:00:00', '2024-11-12 00:00:00', 0, '15', '1'),
-('32', 'Data Analysis', 'Analyze current data trends', 'http://pmtool.example.com/data-analysis', '2024-10-25 00:00:00', '2024-11-15 00:00:00', 1, '19', '8'),
-('33', 'CRM Integration', 'Integrate with new CRM', 'http://pmtool.example.com/crm-integration', '2024-11-30 00:00:00', '2024-11-18 00:00:00', 0, '8', '13'),
-('34', 'Event Planning', 'Plan and execute company events', 'http://pmtool.example.com/event-planning', '2024-12-10 00:00:00', '2024-11-20 00:00:00', 0, '14', '17'),
-('35', 'Employee Wellness', 'Develop employee wellness programs', 'http://pmtool.example.com/wellness', '2024-10-15 00:00:00', '2024-11-22 00:00:00', 0, '2', '12'),
-('36', 'Data Security', 'Enhance data security measures', 'http://pmtool.example.com/data-security', '2024-11-05 00:00:00', '2024-11-25 00:00:00', 1, '10', '4'),
-('37', 'API Development', 'Develop new APIs', 'http://pmtool.example.com/api-development', '2024-12-15 00:00:00', '2024-11-27 00:00:00', 0, '16', '7'),
-('38', 'Client Support', 'Improve client support services', 'http://pmtool.example.com/client-support', '2024-10-20 00:00:00', '2024-12-01 00:00:00', 0, '21', '18'),
-('39', 'Training Materials', 'Create training materials', 'http://pmtool.example.com/training-materials', '2024-11-10 00:00:00', '2024-12-05 00:00:00', 1, '6', '16'),
-('4', 'Data Analytics', 'Develop data analytics tools', 'http://pmtool.example.com/analytics', '2024-10-30 00:00:00', '2024-09-12 00:00:00', 1, '5', '1'),
-('40', 'Employee Onboarding', 'Improve employee onboarding process', 'http://pmtool.example.com/employee-onboarding', '2024-12-01 00:00:00', '2024-12-07 00:00:00', 0, '12', '2'),
-('41', 'IT Infrastructure', 'Upgrade IT infrastructure', 'http://pmtool.example.com/it-infrastructure', '2024-10-15 00:00:00', '2024-12-10 00:00:00', 0, '13', '5'),
-('42', 'Customer Support', 'Enhance customer support capabilities', 'http://pmtool.example.com/customer-support', '2024-11-25 00:00:00', '2024-12-12 00:00:00', 1, '17', '10'),
-('43', 'Product Documentation', 'Update product documentation', 'http://pmtool.example.com/product-docs', '2024-12-10 00:00:00', '2024-12-15 00:00:00', 0, '9', '12'),
-('44', 'Vendor Integration', 'Integrate with new vendors', 'http://pmtool.example.com/vendor-integration', '2024-10-20 00:00:00', '2024-12-18 00:00:00', 0, '14', '19'),
-('45', 'Compliance Training', 'Provide compliance training', 'http://pmtool.example.com/compliance-training', '2024-11-15 00:00:00', '2024-12-20 00:00:00', 0, '20', '6'),
-('46', 'Website Maintenance', 'Perform website maintenance', 'http://pmtool.example.com/website-maintenance', '2024-12-01 00:00:00', '2024-12-22 00:00:00', 1, '11', '13'),
-('47', 'Marketing Campaign', 'Execute new marketing campaign', 'http://pmtool.example.com/marketing-campaign', '2024-10-30 00:00:00', '2024-12-25 00:00:00', 0, '15', '2'),
-('48', 'Client Retention', 'Develop client retention strategies', 'http://pmtool.example.com/client-retention', '2024-11-05 00:00:00', '2024-12-27 00:00:00', 0, '18', '9'),
-('49', 'Technology Assessment', 'Assess new technology trends', 'http://pmtool.example.com/technology-assessment', '2024-12-15 00:00:00', '2024-12-30 00:00:00', 0, '5', '16'),
-('5', 'Employee Training', 'Training for new system users', 'http://pmtool.example.com/training', '2024-11-15 00:00:00', '2024-09-15 00:00:00', 0, '19', '8'),
-('50', 'Strategic Planning', 'Plan for the next fiscal year', 'http://pmtool.example.com/strategic-planning', '2024-10-25 00:00:00', '2024-12-31 00:00:00', 1, '2', '11'),
-('6', 'Feature Update', 'Update key features in the application', 'http://pmtool.example.com/feature-update', '2024-12-15 00:00:00', '2024-09-18 00:00:00', 0, '9', '4'),
-('7', 'Security Audit', 'Conduct a security audit', 'http://pmtool.example.com/security', '2024-10-20 00:00:00', '2024-09-20 00:00:00', 1, '1', '12'),
-('8', 'Infrastructure Upgrade', 'Upgrade server infrastructure', 'http://pmtool.example.com/infrastructure', '2024-11-30 00:00:00', '2024-09-22 00:00:00', 0, '14', '7'),
-('9', 'Market Research', 'Research for new market opportunities', 'http://pmtool.example.com/market-research', '2024-12-10 00:00:00', '2024-09-25 00:00:00', 0, '6', '11');
+('1', 'Alpha Initiative', 'First phase of the new system development', 'http://pmtool.example.com/alpha', '2024-10-15', '2024-09-01', 0, NULL, '1'),
+('10', 'Customer Feedback', 'Analyze customer feedback and make improvements', 'http://pmtool.example.com/feedback', '2024-10-25', '2024-09-27', 1, '11', '16'),
+('11', 'Sales Dashboard', 'Create a new sales dashboard', 'http://pmtool.example.com/sales-dashboard', '2024-10-05', '2024-09-28', 0, '3', '19'),
+('12', 'Product Launch', 'Launch the new product', 'http://pmtool.example.com/product-launch', '2024-11-10', '2024-09-30', 0, '2', '5'),
+('13', 'User Experience', 'Improve user experience based on feedback', 'http://pmtool.example.com/ux-improvement', '2024-12-05', '2024-10-01', 0, '20', '9'),
+('14', 'Tech Support', 'Enhance tech support services', 'http://pmtool.example.com/tech-support', '2024-10-15', '2024-10-02', 0, '13', '14'),
+('15', 'Data Migration', 'Migrate historical data to new system', 'http://pmtool.example.com/data-migration', '2024-11-05', '2024-10-04', 0, '10', '18'),
+('16', 'API Integration', 'Integrate new APIs', 'http://pmtool.example.com/api-integration', '2024-12-01', '2024-10-07', 0, '8', '20'),
+('17', 'Client Onboarding', 'Onboard new clients', 'http://pmtool.example.com/client-onboarding', '2024-10-20', '2024-10-10', 1, '18', '15'),
+('18', 'Performance Tuning', 'Tune application performance', 'http://pmtool.example.com/performance-tuning', '2024-11-20', '2024-10-12', 0, '4', '2'),
+('19', 'Backup System', 'Implement new backup system', 'http://pmtool.example.com/backup-system', '2024-12-20', '2024-10-15', 0, '16', '6'),
+('2', 'Beta Rollout', 'Second phase implementation', 'http://pmtool.example.com/beta', '2024-11-01', '2024-09-05', 0, '15', '6'),
+('21', 'Mobile App', 'Develop a mobile application', 'http://pmtool.example.com/mobile-app', '2024-11-30', '2024-10-20', 0, '22', '10'),
+('22', 'Customer Portal', 'Build a new customer portal', 'http://pmtool.example.com/customer-portal', '2024-12-15', '2024-10-22', 0, '21', '7'),
+('23', 'Internal Audit', 'Conduct an internal audit', 'http://pmtool.example.com/internal-audit', '2024-10-10', '2024-10-25', 1, '15', '11'),
+('24', 'Website Redesign', 'Redesign the company website', 'http://pmtool.example.com/website-redesign', '2024-11-10', '2024-10-27', 0, '9', '12'),
+('25', 'Vendor Management', 'Improve vendor management processes', 'http://pmtool.example.com/vendor-management', '2024-12-01', '2024-10-30', 0, '4', '13'),
+('26', 'Staff Recruitment', 'Recruit new staff members', 'http://pmtool.example.com/staff-recruitment', '2024-10-15', '2024-11-01', 0, '6', '18'),
+('27', 'Product Update', 'Update existing products', 'http://pmtool.example.com/product-update', '2024-11-20', '2024-11-03', 0, '13', '14'),
+('28', 'Client Feedback', 'Collect and analyze client feedback', 'http://pmtool.example.com/client-feedback', '2024-12-10', '2024-11-05', 0, '11', '6'),
+('29', 'Server Maintenance', 'Perform server maintenance', 'http://pmtool.example.com/server-maintenance', '2024-10-30', '2024-11-07', 1, '20', '9'),
+('3', 'Client Migration', 'Migrate clients to the new platform', 'http://pmtool.example.com/migration', '2024-12-01', '2024-09-10', 0, '12', '2'),
+('30', 'Software Upgrade', 'Upgrade the core software', 'http://pmtool.example.com/software-upgrade', '2024-11-15', '2024-11-10', 0, '7', '3'),
+('31', 'HR System', 'Implement new HR system', 'http://pmtool.example.com/hr-system', '2024-12-01', '2024-11-12', 0, '15', '1'),
+('32', 'Data Analysis', 'Analyze current data trends', 'http://pmtool.example.com/data-analysis', '2024-10-25', '2024-11-15', 1, '19', '8'),
+('33', 'CRM Integration', 'Integrate with new CRM', 'http://pmtool.example.com/crm-integration', '2024-11-30', '2024-11-18', 0, '8', '13'),
+('34', 'Event Planning', 'Plan and execute company events', 'http://pmtool.example.com/event-planning', '2024-12-10', '2024-11-20', 0, '14', '17'),
+('35', 'Employee Wellness', 'Develop employee wellness programs', 'http://pmtool.example.com/wellness', '2024-10-15', '2024-11-22', 0, '2', '12'),
+('36', 'Data Security', 'Enhance data security measures', 'http://pmtool.example.com/data-security', '2024-11-05', '2024-11-25', 1, '10', '4'),
+('37', 'API Development', 'Develop new APIs', 'http://pmtool.example.com/api-development', '2024-12-15', '2024-11-27', 0, '16', '7'),
+('38', 'Client Support', 'Improve client support services', 'http://pmtool.example.com/client-support', '2024-10-20', '2024-12-01', 0, '21', '18'),
+('39', 'Training Materials', 'Create training materials', 'http://pmtool.example.com/training-materials', '2024-11-10', '2024-12-05', 1, '6', '16'),
+('4', 'Data Analytics', 'Develop data analytics tools', 'http://pmtool.example.com/analytics', '2024-10-30', '2024-09-12', 1, '5', '1'),
+('40', 'Employee Onboarding', 'Improve employee onboarding process', 'http://pmtool.example.com/employee-onboarding', '2024-12-01', '2024-12-07', 0, '12', '2'),
+('41', 'IT Infrastructure', 'Upgrade IT infrastructure', 'http://pmtool.example.com/it-infrastructure', '2024-10-15', '2024-12-10', 0, '13', '5'),
+('43', 'Product Documentation', 'Update product documentation', 'http://pmtool.example.com/product-docs', '2024-12-10', '2024-12-15', 0, '9', '12'),
+('44', 'Vendor Integration', 'Integrate with new vendors', 'http://pmtool.example.com/vendor-integration', '2024-10-20', '2024-12-18', 0, '14', '19'),
+('45', 'Compliance Training', 'Provide compliance training', 'http://pmtool.example.com/compliance-training', '2024-11-15', '2024-12-20', 0, '20', '6'),
+('46', 'Website Maintenance', 'Perform website maintenance', 'http://pmtool.example.com/website-maintenance', '2024-12-01', '2024-12-22', 1, '11', '13'),
+('47', 'Marketing Campaign', 'Execute new marketing campaign', 'http://pmtool.example.com/marketing-campaign', '2024-10-30', '2024-12-25', 0, '15', '2'),
+('48', 'Client Retention', 'Develop client retention strategies', 'http://pmtool.example.com/client-retention', '2024-11-05', '2024-12-27', 0, '18', '9'),
+('49', 'Technology Assessment', 'Assess new technology trends', 'http://pmtool.example.com/technology-assessment', '2024-12-15', '2024-12-30', 0, '5', '16'),
+('5', 'Employee Training', 'Training for new system users', 'http://pmtool.example.com/training', '2024-11-15', '2024-09-15', 0, '19', '8'),
+('50', 'Strategic Planning', 'Plan for the next fiscal year', 'http://pmtool.example.com/strategic-planning', '2024-10-25', '2024-12-31', 1, '2', '11'),
+('6', 'Feature Update', 'Update key features in the application', 'http://pmtool.example.com/feature-update', '2024-12-15', '2024-09-18', 0, '9', '4'),
+('7', 'Security Audit', 'Conduct a security audit', 'http://pmtool.example.com/security', '2024-10-20', '2024-09-20', 1, '1', '12'),
+('8', 'Infrastructure Upgrade', 'Upgrade server infrastructure', 'http://pmtool.example.com/infrastructure', '2024-11-30', '2024-09-22', 0, '14', '7'),
+('9', 'Market Research', 'Research for new market opportunities', 'http://pmtool.example.com/market-research', '2024-12-10', '2024-09-25', 0, '6', '11');
 
 -- --------------------------------------------------------
 
@@ -278,6 +295,13 @@ CREATE TABLE `projects_skills` (
   `skill_id` char(36) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `projects_skills`
+--
+
+INSERT INTO `projects_skills` (`id`, `project_id`, `skill_id`) VALUES
+('e28a8ca9-2410-4919-8011-8408142c0988', '1', 'f6a4f74d-93e4-481c-9d67-5293bdb13ce0');
+
 -- --------------------------------------------------------
 
 --
@@ -288,6 +312,35 @@ CREATE TABLE `skills` (
   `id` char(36) COLLATE utf8mb4_general_ci NOT NULL,
   `name` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`id`, `name`) VALUES
+('00712353-f9e5-4b46-a4d4-c1a8cff15bb1', 'Ruby'),
+('017f1abd-7279-493c-b4f8-2dd00b9e8b0e', 'MySQL'),
+('398011b1-8059-4a11-b1fe-1c97c6bb2ff5', 'Microsoft Azure'),
+('3d66c84f-722f-4bb6-9338-87d0516fed1b', 'DevOps'),
+('4e22066e-be6e-42a3-8bbe-6aae56ec845f', 'HTML'),
+('50812eaf-1294-45c9-b509-475060b7d6db', 'C#'),
+('63e7b89e-5bd4-4bda-992c-ccd10ba896d2', 'Go'),
+('6df05a36-1e1c-4704-9f0e-787e06a0ecc0', 'Kotlin (Android)'),
+('71fc5e08-dddb-4425-a59b-35e98e62d4af', 'MongoDB'),
+('80272b77-92c9-4af3-a076-2455b3a6ab21', 'Google Cloud Platform'),
+('894b28a9-efc3-49e4-977c-14f8cce4ee65', 'OpenCV'),
+('99dae9c8-7528-4cc7-80ea-ac87cc4b564d', 'Amazon Web Services'),
+('9ba744e7-9c36-4555-a973-00164d52054d', 'RESTful Services'),
+('9e266d06-81a1-4598-852d-afac9ca92d2d', 'PHP'),
+('a4e0fb87-cb33-4737-bbec-de8d1473d51f', 'Swift (iOS)'),
+('b45d4986-09a5-4381-8274-416b7a62f112', 'Python'),
+('c7d87671-a592-4a8b-a5af-cf748bca7ca3', 'Firewall Configuration'),
+('cfc30521-c8ba-48d1-9d44-708a55efb123', 'Java'),
+('d80c4607-23d1-4a6f-b00a-f8189650d547', 'CSS'),
+('e526c508-3342-4ed7-aaf6-d5e6fab74d29', 'C'),
+('edfe1e34-ee3a-4812-9cdd-8c1350d9a3b5', 'Cloud Security'),
+('ef7a1c53-8ee4-47cb-97c8-ce94ca5c86b9', 'Network Configuration'),
+('f6a4f74d-93e4-481c-9d67-5293bdb13ce0', 'Javascript');
 
 -- --------------------------------------------------------
 
@@ -302,6 +355,13 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(96) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`) VALUES
+('83df61de-b903-41f8-a6f2-de122130a533', 'Nathan', 'Jims', 'nathan.jims@gmail.com', '$2y$10$Dub0vuEATStR6/1jhFrFA.9qnFQ9tsI/GW3TCiYNd2/ZHf7xkntie');
 
 --
 -- Indexes for dumped tables
