@@ -82,11 +82,11 @@ class ProjectsController extends AppController
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
             if ($this->Projects->save($project)) {
-                $this->Flash->success(__('The project has been saved.'));
+                $this->Flash->success(__('The project: ' . $project->name . ' has been added.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The project could not be saved. Please, try again.'));
+            $this->Flash->error(__('The project: ' . $project->name . ' could not be saved. Please, try again.'));
         }
         $contractors = $this->Projects->Contractors->find('list', limit: 200)->all();
         $organisations = $this->Projects->Organisations->find('list', limit: 200)->all();
@@ -107,11 +107,11 @@ class ProjectsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $project = $this->Projects->patchEntity($project, $this->request->getData());
             if ($this->Projects->save($project)) {
-                $this->Flash->success(__('The project has been saved.'));
+                $this->Flash->success(__('The project: ' . $project->name . ' has been updated.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The project could not be saved. Please, try again.'));
+            $this->Flash->error(__('The project: ' . $project->name . ' could not be updated. Please, try again.'));
         }
         $contractors = $this->Projects->Contractors->find('list', limit: 200)->all();
         $organisations = $this->Projects->Organisations->find('list', limit: 200)->all();
@@ -131,9 +131,9 @@ class ProjectsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $project = $this->Projects->get($id);
         if ($this->Projects->delete($project)) {
-            $this->Flash->success(__('The project has been deleted.'));
+            $this->Flash->success(__('The project: ' . $project->name . ' has been deleted.'));
         } else {
-            $this->Flash->error(__('The project could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The project: ' . $project->name . ' could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

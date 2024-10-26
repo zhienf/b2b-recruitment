@@ -15,7 +15,7 @@
             <?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $contractor->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $contractor->id), 'class' => 'side-nav-item']
+                ['confirm' => __('Are you sure you want to delete the contractor {0} {1}?', $contractor->first_name, $contractor->last_name), 'class' => 'side-nav-item']
             ) ?>
             <?= $this->Html->link(__('List Contractors'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>

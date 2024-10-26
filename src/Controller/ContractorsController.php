@@ -87,11 +87,11 @@ class ContractorsController extends AppController
         if ($this->request->is('post')) {
             $contractor = $this->Contractors->patchEntity($contractor, $this->request->getData());
             if ($this->Contractors->save($contractor)) {
-                $this->Flash->success(__('The contractor has been saved.'));
+                $this->Flash->success(__('The contractor has been added.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The contractor could not be saved. Please, try again.'));
+            $this->Flash->error(__('The contractor could not be added. Please, try again.'));
         }
         $skills = $this->Contractors->Skills->find('list', limit: 200)->all();
         $this->set(compact('contractor', 'skills'));
@@ -126,11 +126,11 @@ class ContractorsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contractor = $this->Contractors->patchEntity($contractor, $this->request->getData());
             if ($this->Contractors->save($contractor)) {
-                $this->Flash->success(__('The contractor has been saved.'));
+                $this->Flash->success(__('The contractor: ' . $contractor->first_name . ' ' . $contractor->last_name . ' has been updated.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The contractor could not be saved. Please, try again.'));
+            $this->Flash->error(__('The contractor: ' . $contractor->first_name . ' ' . $contractor->last_name . ' could not be saved. Please, try again.'));
         }
         $skills = $this->Contractors->Skills->find('list', limit: 200)->all();
         $this->set(compact('contractor', 'skills'));
@@ -148,9 +148,9 @@ class ContractorsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $contractor = $this->Contractors->get($id);
         if ($this->Contractors->delete($contractor)) {
-            $this->Flash->success(__('The contractor has been deleted.'));
+            $this->Flash->success(__('The contractor: ' . $contractor->first_name . ' ' . $contractor->last_name . ' has been deleted.'));
         } else {
-            $this->Flash->error(__('The contractor could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The contractor: ' . $contractor->first_name . ' ' . $contractor->last_name . ' could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

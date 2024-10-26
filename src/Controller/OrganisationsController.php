@@ -71,11 +71,11 @@ class OrganisationsController extends AppController
         if ($this->request->is('post')) {
             $organisation = $this->Organisations->patchEntity($organisation, $this->request->getData());
             if ($this->Organisations->save($organisation)) {
-                $this->Flash->success(__('The organisation has been saved.'));
+                $this->Flash->success(__('The organisation: ' . $organisation->business_name . ' has been added.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The organisation could not be saved. Please, try again.'));
+            $this->Flash->error(__('The organisation: ' . $organisation->business_name . ' could not be added. Please, try again.'));
         }
         $this->set(compact('organisation'));
     }
@@ -109,11 +109,11 @@ class OrganisationsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $organisation = $this->Organisations->patchEntity($organisation, $this->request->getData());
             if ($this->Organisations->save($organisation)) {
-                $this->Flash->success(__('The organisation has been saved.'));
+                $this->Flash->success(__('The organisation: ' . $organisation->business_name . ' has been updated.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The organisation could not be saved. Please, try again.'));
+            $this->Flash->error(__('The organisation: ' . $organisation->business_name . ' could not be updated. Please, try again.'));
         }
         $this->set(compact('organisation'));
     }
@@ -130,9 +130,9 @@ class OrganisationsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $organisation = $this->Organisations->get($id);
         if ($this->Organisations->delete($organisation)) {
-            $this->Flash->success(__('The organisation has been deleted.'));
+            $this->Flash->success(__('The organisation: ' . $organisation->business_name . ' has been deleted.'));
         } else {
-            $this->Flash->error(__('The organisation could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The organisation: ' . $organisation->business_name . ' could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

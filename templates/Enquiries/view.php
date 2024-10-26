@@ -8,7 +8,7 @@
     <aside class="column">
         <div class="side-nav">
             <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(__('Delete Enquiry'), ['action' => 'delete', $enquiry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $enquiry->id), 'class' => 'side-nav-item']) ?>
+            <?= $this->Form->postLink(__('Delete Enquiry'), ['action' => 'delete', $enquiry->id], ['confirm' => __('Are you sure you want to delete the enquiry from {0} {1}?', $enquiry->first_name, $enquiry->last_name), 'class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('List Enquiries'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link(__('Link Organisation / Contractor'), ['action' => 'edit', $enquiry->id], ['class' => 'side-nav-item']) ?>
             <?= $this->Html->link($enquiry->replied ? __('Marked as Not Replied') : __('Marked as Replied'), ['action' => 'switchReplyStatus', $enquiry->id], ['class' => 'side-nav-item']) ?>

@@ -40,7 +40,7 @@
                     <td><?= h($enquiry->replied) ? '✅' : '❌' ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('Manage'), ['action' => 'view', $enquiry->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $enquiry->id], ['confirm' => __('Are you sure you want to delete # {0}?', $enquiry->id)]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $enquiry->id], ['confirm' => __('Are you sure you want to delete the enquiry from {0} {1}?', $enquiry->first_name, $enquiry->last_name)]) ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
